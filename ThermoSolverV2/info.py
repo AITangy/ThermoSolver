@@ -1,4 +1,5 @@
 from initialise import *
+from constants import *
 
 #info.py passes known data into data structures
 
@@ -19,6 +20,12 @@ componenttype[2] = ["Turbine"]
 wtransfer[0] = 3000000
 # qtransfer[0] = 0
 isenefficiency[2] = 1
+
+
+datT = 273.16
+datP = 1*10**5
+datv = R*datT/datP
+dats = 3796
 
 for states in range(0, numberofstates):
     if processtype[states] == ["Isentropic"]:  # passing 2d array info

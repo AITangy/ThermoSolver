@@ -1,6 +1,6 @@
 from constants import *
 import math
-from info import definedstates, numberofstates,accuracy
+from info import definedstates, numberofstates,accuracy,datT,datP,datv,dats
 import numpy as np
 from statename import adjstates
 
@@ -44,25 +44,21 @@ def CheckDefine(i,properties,plotinfo):
 
 
 def FullyDefinernew(modifproperties):   # We now need to tweak every instance of using the fully definer alogrythm to include the fact that we have the counter built in...                                                                                                                  # for entropy we will use datum values at the triple point of water and 1 bar
-    datT = 273.16
-    datP = 10000
-    datv = 1 / 1.276
-    dats = 3796
 
     if modifproperties[0] != 0 and modifproperties[1]!= 0:                                            # Solving given T and P
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[0] != 0 and modifproperties[2] != 0:                                         # Solving given T and v
         modifproperties[1] = (R * modifproperties[0]) / modifproperties[2]  # P = RT/v
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[0] != 0 and modifproperties[5] != 0:                                         # Solving given T and s
-        modifproperties[1] = math.exp((1 / R * (Cp * math.log(modifproperties[0] / datT) + modifproperties[5] - dats))) * datP
+        modifproperties[1] = math.exp((Cp*math.log(modifproperties[0]/datT)+dats-modifproperties[5])/R)*datP
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
@@ -72,22 +68,22 @@ def FullyDefinernew(modifproperties):   # We now need to tweak every instance of
         modifproperties[0] = modifproperties[1] * modifproperties[2] / R
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[1] != 0 and modifproperties[3] != 0:                                         # Solving given P and u
         modifproperties[0] = modifproperties[3] / Cv
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[4] = Cp * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[1] != 0 and modifproperties[4] != 0:                                         # Solving given P and h
         modifproperties[0] = modifproperties[4] / Cp
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[1] != 0 and modifproperties[5] != 0:                                         # Solving given P and s
-        modifproperties[0] = math.exp((modifproperties[5] - dats + R * math.log(modifproperties[1] / datP)) * 1 / Cp) * modifproperties[0]
+        modifproperties[0] = math.exp((modifproperties[5]-dats + R*math.log(modifproperties[1]/datP))/Cp)*datT
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
@@ -96,29 +92,30 @@ def FullyDefinernew(modifproperties):   # We now need to tweak every instance of
         modifproperties[0] = modifproperties[3] / Cv
         modifproperties[1] = (R * modifproperties[0]) / modifproperties[2]
         modifproperties[4] = Cp * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[2] != 0 and modifproperties[4] != 0:                                         # Solving if given v and h
         modifproperties[0] = modifproperties[4] / Cp
         modifproperties[1] = (R * modifproperties[0]) / modifproperties[2]  # P = RT/v
         modifproperties[3] = Cv * modifproperties[0]
-        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP)
+        modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
 
     elif modifproperties[2] != 0 and modifproperties[5] != 0:                                         # Solving if given v and s
-        modifproperties[0] = math.exp((modifproperties[5] - dats - R * math.log(modifproperties[2] / datv)) / Cv) * datT
-        modifproperties[1] = (R * modifproperties[0]) / modifproperties[2]
+        modifproperties[1] = math.exp((modifproperties[5]-dats - Cp*math.log(modifproperties[2]/datv))/Cv)*datP
+        modifproperties[0] = modifproperties[1] * modifproperties[2] / R
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
 
+
     elif modifproperties[3] != 0 and modifproperties[5] != 0:                                         # Solving if given u and s
         modifproperties[0] = modifproperties[3] / Cv
-        modifproperties[1] = math.exp((1 / R * (Cp * math.log(modifproperties[0] / datT) + modifproperties[5] - dats))) * datP
+        modifproperties[1] = math.exp((Cp*math.log(modifproperties[0]/datT)+dats-modifproperties[5])/R)*datP
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[4] = Cp * modifproperties[0]
 
     elif modifproperties[4] != 0 and modifproperties[5] != 0:                                         # Solving if given h and s
         modifproperties[0] = modifproperties[4] / Cp
-        modifproperties[1] = math.exp((1 / R * (Cp * math.log(modifproperties[0] / datT) + modifproperties[5] - dats))) * datP
+        modifproperties[1] = math.exp((Cp*math.log(modifproperties[0]/datT)+dats-modifproperties[5])/R)*datP
         modifproperties[2] = R * modifproperties[0] / modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
 

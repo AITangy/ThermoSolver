@@ -1,26 +1,30 @@
 from bokeh.models import Arrow, NormalHead
+from bokeh.palettes import Category10
 from bokeh.plotting import figure, show
+from info import numberofstates
 from info import accuracy
 def plotaround(plotinfo):
-    plot1 = figure(title="Component 3", x_axis_label='v', y_axis_label='P')
-    plot1.line(plotinfo[2][:,2], plotinfo[2][:,1], legend_label="Component 3", line_width=2)
 
+    plot1 = figure(title="P v Diagram", x_axis_label='v', y_axis_label='P')
+    for i in range(0,numberofstates):
+        plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i), line_width=2,color =Category10[numberofstates][i])
     show(plot1)
 
-    plot2 = figure(title="Component 3", x_axis_label='s', y_axis_label='T')
-    plot2.line(plotinfo[2][:, 5], plotinfo[2][:, 0], legend_label="Component 3", line_width=2)
-
+    plot2 = figure(title="T s Diagram", x_axis_label='s', y_axis_label='T')
+    for i in range(0, numberofstates):
+        plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i), line_width=2, color = Category10[numberofstates][i])
     show(plot2)
 
-    plot3 = figure(title="Component 3", x_axis_label='s', y_axis_label='h')
-    plot3.line(plotinfo[2][:, 5], plotinfo[2][:, 4], legend_label="Component 3", line_width=2)
-
+    plot3 = figure(title="h s Diagram", x_axis_label='s', y_axis_label='h')
+    for i in range(0, numberofstates):
+        plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i), line_width=2,color = Category10[numberofstates][i])
     show(plot3)
+
+
+#    show(plot3)
 
 def plotbycomponent():
     print()
-
-
 
 
 

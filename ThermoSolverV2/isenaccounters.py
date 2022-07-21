@@ -1,4 +1,4 @@
-from definer import FullyDefiner,FullyDefinernew
+from definer import FullyDefinernew
 from info import processes
 
 def isenaccounter(i,nextstate,isenproperties,definedstates, properties):
@@ -35,13 +35,13 @@ def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
         if processes[prevstate][5] == "Compressor" or processes[prevstate][5] =="Pump" or processes[prevstate][5] == "Heater" and processes[prevstate][2]!=0:
 
             properties[prevstate][4] = (isenproperties[prevstate][4] - properties[i][4]) / processes[i][2] + properties[i][4]
-            properties[prevstate] = FullyDefiner(properties[prevstate])
+            properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
 
         elif processes[prevstate][5] == "Turbine" or processes[prevstate][5]=="Cooler" and processes[prevstate][2]!=0:
 
             properties[prevstate][4] = processes[i][2] * (isenproperties[prevstate][4] - properties[i][4]) + properties[i][4]
-            properties[prevstate] = FullyDefiner(properties[prevstate])
+            properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
     return definedstates,properties
 
