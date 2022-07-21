@@ -13,12 +13,12 @@ def isenaccounter(i,nextstate,isenproperties,definedstates, properties):
         if processes[i][5] == "Compressor" or processes[i][5] =="Pump" or processes[i][5] == "Heater" and processes[i][2]!=0:
 
             properties[nextstate][4] = (isenproperties[nextstate][4] - properties[i][4]) / processes[i][2] + properties[i][4]
-            properties[nextstate] = FullyDefiner(properties[nextstate])
+            properties[nextstate] = FullyDefinernew(properties[nextstate])
             definedstates[nextstate] = True
 
         elif processes[i][5] == "Turbine" or processes[i][5]=="Cooler" and processes[i][2]!=0:
             properties[nextstate][4] = processes[i][2] * (isenproperties[nextstate][4] - properties[i][4]) + properties[i][4]
-            properties[nextstate] = FullyDefiner(properties[nextstate])
+            properties[nextstate] = FullyDefinernew(properties[nextstate])
             definedstates[nextstate] = True
     return definedstates,properties
 

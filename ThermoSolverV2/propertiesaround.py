@@ -1,6 +1,6 @@
 from statename import adjstates
 from isenaccounters import isenaccounter, isenaccounterback, isenaccounterbackv2
-from definer import FullyDefiner,mgetH,FullyDefinernew
+from definer import mgetH,FullyDefinernew
 from constants import *
 import numpy as np
 import math
@@ -19,7 +19,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 newinfo = True
                 isenproperties[nextstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)))/properties[nextstate][0])
                                                                                                                 # We want to fully define the isentropic matrix to allow us to use its values if it turns out to be good, this could also aid in drawing graphs where we could use the isentropic case to show how isentropic efficencies are affecting the graph, sicne the isentropic stuff updates each tijme perhaps we need a "saved" one which keeps the isentropic function rather than updating with the main so we can seperate what was calculated isentropically and graph it distinctly
-                isenproperties = FullyDefiner(isenproperties, nextstate)
+                isenproperties[nextstate] = FullyDefinernew(isenproperties[nextstate])
                                                                                                                 # We are going to have to account for isentropic efficency alot so I have put this process into a seperate function that we can reuse many times
                 definedstataes,properties = isenaccounter(i, nextstate, isenproperties, definedstates,properties)
 
@@ -34,7 +34,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 newinfo = True
                 isenproperties[nextstate][0] = properties[i][0] * (properties[nextstate][1]/properties[i][1])**((gamma-1)/gamma)
 
-                isenproperties = FullyDefiner(isenproperties,nextstate)
+                isenproperties[nextstate] = FullyDefinernew(isenproperties[nextstate])
 
                 definedstataes,properties = isenaccounter(i, nextstate, isenproperties, definedstates,properties)
 
@@ -46,7 +46,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 newinfo = True
                 isenproperties[nextstate][1] = properties[i][1] * (properties[i][2]/properties[nextstate][2]) ** (gamma)
 
-                isenproperties = FullyDefiner(isenproperties,nextstate)
+                isenproperties = FullyDefinernew(isenproperties[nextstate])
 
                 definedstataes,properties = isenaccounter(i, nextstate, isenproperties, definedstates,properties)
 
@@ -63,7 +63,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 isenproperties[prevstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)) )/properties[prevstate][0])
 
 
-                isenproperties = FullyDefiner(isenproperties, prevstate)
+                isenproperties[prevstate] = FullyDefinernew(isenproperties[prevstate])
 
 
                 definedstates,properties = isenaccounterback(i, prevstate, isenproperties,definedstates,properties)
@@ -80,7 +80,8 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                                 # I want to modularise this such that we can call it for each intermediate state in the process, for this we need to take into account the information provided by the conditions, whilst keeping it as modular as possible.
                 isenproperties[prevstate][0] = properties[i][0] * (properties[prevstate][1] / properties[i][1]) ** ((gamma - 1) / gamma)
 
-                isenproperties = FullyDefiner(isenproperties, prevstate)
+                print(Cp*math.log(properties[i][0]/isenproperties[prevstate][0]) - R *math.log(properties[i][1]/isenproperties[prevstate][1]))
+                isenproperties[prevstate] = FullyDefinernew(isenproperties[prevstate])
 
                 definedstates,properties = isenaccounterback(i, prevstate, isenproperties,definedstates,properties)
 
@@ -114,7 +115,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 newinfo = True
                 isenproperties[prevstate][1] = properties[i][1] * (properties[i][2] / properties[prevstate][2]) ** (gamma)
 
-                isenproperties = FullyDefiner(isenproperties, prevstate)
+                isenproperties[prevstate] = FullyDefinernew(isenproperties[prevstate])
 
                 definedstates,properties = isenaccounterback(i, prevstate, isenproperties,definedstates,properties)
 

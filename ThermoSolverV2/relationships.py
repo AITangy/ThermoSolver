@@ -2,6 +2,7 @@ from info import processes,ratios
 import statename
 from info import accuracy
 import numpy as np
+from definer import FullyDefinernew
 
 def CheckRelation(i, newinfo, properties,plotinfo):
     # Here we go through and try to find new information by accounting for the process type of each of the components
@@ -9,6 +10,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
     nextstate,prevstate = statename.adjstates(i)
 
     if processes[i][4] == ["Isobaric"]:  # For strings the values stores inside must be refered to in square brackets for conditional statements however this is not true for integers.
+        plotinfo = relationshipintermediate(plotinfo, i)
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
             newinfo = True
             properties[i][1] = properties[nextstate][1]
@@ -114,6 +116,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
     if processes[i][4] == ["Isothermal"]:
 
+        plotinfo = relationshipintermediate(plotinfo,i)
         if properties[nextstate][0] != 0 and properties[i][0] == 0:
             newinfo = True
             properties[i][0] = properties[nextstate][0]
@@ -127,6 +130,9 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
             for j in range(0,accuracy):
                 plotinfo[i][j][0] = properties[nextstate][0]
+
+
+
 
     # Here we can account for ratio relationships in the processes if they happen to exist!
 
@@ -158,3 +164,14 @@ def CheckRelation(i, newinfo, properties,plotinfo):
             properties[nextstate][2] = properties[i][2] * ratios[i][2]
 
     return newinfo, properties,plotinfo
+
+
+def relationshipintermediate(plotinfo,i):
+
+    if plotinfo[i][accuracy-1][5]!=0 and plotinfo[i][0][5]!=0:
+        intermediates = np.linspace(plotinfo[i][0][5], plotinfo[i][accuracy-1][5],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+        plotinfo[i][:, 5] = intermediates
+        for j in range(0,accuracy):
+            plotinfo[i][j] = FullyDefinernew(plotinfo[i][j])
+
+    return plotinfo

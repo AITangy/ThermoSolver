@@ -17,20 +17,20 @@ def CheckDefine(i,properties,plotinfo):
         if sum == 4:  # Fully defining the state in each case where we have enough information
             newinfo = True
             definedstates[i] = True
-            FullyDefiner(properties, i)
+            properties[i] = FullyDefinernew(properties[i])
             plotinfo[i][0] = properties[i]
             plotinfo[prevstate][accuracy-1] = properties[i]
         elif sum == 3 and (properties[i][1] + properties[i][2] + properties[i][5]) != 0:
             newinfo = True
             definedstates[i] = True
-            FullyDefiner(properties, i)
+            properties[i] = FullyDefinernew(properties[i])
             plotinfo[i][0] = properties[i]
             plotinfo[prevstate][accuracy - 1] = properties[i]
 
         elif sum == 2 and (properties[i][1] + properties[i][2] + properties[i][3] + properties[i][5]) != 0 and (properties[i][1] + properties[i][2] + properties[i][3] + properties[i][5]) != 0 and (properties[i][0] + properties[i][1] + properties[i][2] + properties[i][5]) != 0:
             newinfo = True
             definedstates[i] = True
-            FullyDefiner(properties, i)
+            properties[i] = FullyDefinernew(properties[i])
             plotinfo[i][0] = properties[i]
             plotinfo[prevstate][accuracy - 1] = properties[i]
 
@@ -134,180 +134,6 @@ def mgetH(modifproperties,isenindex):
     modifproperties[isenindex] = 0
     return modifproperties
 
-def hGet(dummyproperties, counter):
-    datT = 273.16
-    datP = 10000
-    datv = 1 / 1.276
-    dats = 3796
-    modifproperties = np.copy(dummyproperties)
-
-
-    if dummyproperties[counter][0] != 0 and dummyproperties[counter][1]!= 0:                                            # Solving given T and P
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][0] != 0 and dummyproperties[counter][2] != 0:                                         # Solving given T and v
-        dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]  # P = RT/v
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][0] != 0 and dummyproperties[counter][5] != 0:                                         # Solving given T and s
-        dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-
-
-    elif dummyproperties[counter][1] != 0 and dummyproperties[counter][2] != 0:                                         # Solving given P and T
-        dummyproperties[counter][0] = dummyproperties[counter][1] * dummyproperties[counter][2] / R
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][1] != 0 and dummyproperties[counter][3] != 0:                                         # Solving given P and u
-        dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][1] != 0 and dummyproperties[counter][4] != 0:                                         # Solving given P and h
-        dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][1] != 0 and dummyproperties[counter][5] != 0:                                         # Solving given P and s
-        dummyproperties[counter][0] = math.exp((dummyproperties[counter][5] - dats + R * math.log(dummyproperties[counter][1] / datP)) * 1 / Cp) * dummyproperties[counter][0]
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-
-    elif dummyproperties[counter][2] != 0 and dummyproperties[counter][3] != 0:                                         # Solving given v and u
-        dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
-        dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][2] != 0 and dummyproperties[counter][4] != 0:                                         # Solving if given v and h
-        dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
-        dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]  # P = RT/v
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
-
-    elif dummyproperties[counter][2] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given v and s
-        dummyproperties[counter][0] = math.exp((dummyproperties[counter][5] - dats - R * math.log(dummyproperties[counter][2] / datv)) / Cv) * datT
-        dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-
-    elif dummyproperties[counter][3] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given u and s
-        dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
-        dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
-
-    elif dummyproperties[counter][4] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given h and s
-        dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
-        dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
-        dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
-        dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
-
-
-    modifproperties[counter][4] = dummyproperties[counter][4]
-    return modifproperties
-
-
-def FullyDefiner(modifproperties, counter):                                                                                                                     # for entropy we will use datum values at the triple point of water and 1 bar
-    datT = 273.16
-    datP = 10000
-    datv = 1 / 1.276
-    dats = 3796
-
-    if modifproperties[counter][0] != 0 and modifproperties[counter][1]!= 0:                                            # Solving given T and P
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][0] != 0 and modifproperties[counter][2] != 0:                                         # Solving given T and v
-        modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]  # P = RT/v
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][0] != 0 and modifproperties[counter][5] != 0:                                         # Solving given T and s
-        modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-
-
-    elif modifproperties[counter][1] != 0 and modifproperties[counter][2] != 0:                                         # Solving given P and T
-        modifproperties[counter][0] = modifproperties[counter][1] * modifproperties[counter][2] / R
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][1] != 0 and modifproperties[counter][3] != 0:                                         # Solving given P and u
-        modifproperties[counter][0] = modifproperties[counter][3] / Cv
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][1] != 0 and modifproperties[counter][4] != 0:                                         # Solving given P and h
-        modifproperties[counter][0] = modifproperties[counter][4] / Cp
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][1] != 0 and modifproperties[counter][5] != 0:                                         # Solving given P and s
-        modifproperties[counter][0] = math.exp((modifproperties[counter][5] - dats + R * math.log(modifproperties[counter][1] / datP)) * 1 / Cp) * modifproperties[counter][0]
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-
-    elif modifproperties[counter][2] != 0 and modifproperties[counter][3] != 0:                                         # Solving given v and u
-        modifproperties[counter][0] = modifproperties[counter][3] / Cv
-        modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][2] != 0 and modifproperties[counter][4] != 0:                                         # Solving if given v and h
-        modifproperties[counter][0] = modifproperties[counter][4] / Cp
-        modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]  # P = RT/v
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
-
-    elif modifproperties[counter][2] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given v and s
-        modifproperties[counter][0] = math.exp((modifproperties[counter][5] - dats - R * math.log(modifproperties[counter][2] / datv)) / Cv) * datT
-        modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-
-    elif modifproperties[counter][3] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given u and s
-        modifproperties[counter][0] = modifproperties[counter][3] / Cv
-        modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][4] = Cp * modifproperties[counter][0]
-
-    elif modifproperties[counter][4] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given h and s
-        modifproperties[counter][0] = modifproperties[counter][4] / Cp
-        modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
-        modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
-        modifproperties[counter][3] = Cv * modifproperties[counter][0]
-
-    return modifproperties
-
-
-
-
-
-
-
-
 
 def defmessage(definedstates, properties):
     found = True
@@ -319,6 +145,183 @@ def defmessage(definedstates, properties):
     else:
         print("System was solved with the following properties:")
         print(properties)
+
+
+# def hGet(dummyproperties, counter):
+#     datT = 273.16
+#     datP = 10000
+#     datv = 1 / 1.276
+#     dats = 3796
+#     modifproperties = np.copy(dummyproperties)
+#
+#
+#     if dummyproperties[counter][0] != 0 and dummyproperties[counter][1]!= 0:                                            # Solving given T and P
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][0] != 0 and dummyproperties[counter][2] != 0:                                         # Solving given T and v
+#         dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]  # P = RT/v
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][0] != 0 and dummyproperties[counter][5] != 0:                                         # Solving given T and s
+#         dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#
+#
+#     elif dummyproperties[counter][1] != 0 and dummyproperties[counter][2] != 0:                                         # Solving given P and T
+#         dummyproperties[counter][0] = dummyproperties[counter][1] * dummyproperties[counter][2] / R
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][1] != 0 and dummyproperties[counter][3] != 0:                                         # Solving given P and u
+#         dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][1] != 0 and dummyproperties[counter][4] != 0:                                         # Solving given P and h
+#         dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][1] != 0 and dummyproperties[counter][5] != 0:                                         # Solving given P and s
+#         dummyproperties[counter][0] = math.exp((dummyproperties[counter][5] - dats + R * math.log(dummyproperties[counter][1] / datP)) * 1 / Cp) * dummyproperties[counter][0]
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#
+#     elif dummyproperties[counter][2] != 0 and dummyproperties[counter][3] != 0:                                         # Solving given v and u
+#         dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
+#         dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][2] != 0 and dummyproperties[counter][4] != 0:                                         # Solving if given v and h
+#         dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
+#         dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]  # P = RT/v
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][5] = Cp * math.log(dummyproperties[counter][0] / datT) - R * math.log(dummyproperties[counter][1] / datP)
+#
+#     elif dummyproperties[counter][2] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given v and s
+#         dummyproperties[counter][0] = math.exp((dummyproperties[counter][5] - dats - R * math.log(dummyproperties[counter][2] / datv)) / Cv) * datT
+#         dummyproperties[counter][1] = (R * dummyproperties[counter][0]) / dummyproperties[counter][2]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#
+#     elif dummyproperties[counter][3] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given u and s
+#         dummyproperties[counter][0] = dummyproperties[counter][3] / Cv
+#         dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][4] = Cp * dummyproperties[counter][0]
+#
+#     elif dummyproperties[counter][4] != 0 and dummyproperties[counter][5] != 0:                                         # Solving if given h and s
+#         dummyproperties[counter][0] = dummyproperties[counter][4] / Cp
+#         dummyproperties[counter][1] = math.exp((1 / R * (Cp * math.log(dummyproperties[counter][0] / datT) + dummyproperties[counter][5] - dats))) * datP
+#         dummyproperties[counter][2] = R * dummyproperties[counter][0] / dummyproperties[counter][1]
+#         dummyproperties[counter][3] = Cv * dummyproperties[counter][0]
+#
+#
+#     modifproperties[counter][4] = dummyproperties[counter][4]
+#     return modifproperties
+#
+#
+# def FullyDefiner(modifproperties, counter):                                                                                                                     # for entropy we will use datum values at the triple point of water and 1 bar
+#     datT = 273.16
+#     datP = 10000
+#     datv = 1 / 1.276
+#     dats = 3796
+#
+#     if modifproperties[counter][0] != 0 and modifproperties[counter][1]!= 0:                                            # Solving given T and P
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][0] != 0 and modifproperties[counter][2] != 0:                                         # Solving given T and v
+#         modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]  # P = RT/v
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][0] != 0 and modifproperties[counter][5] != 0:                                         # Solving given T and s
+#         modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#
+#
+#     elif modifproperties[counter][1] != 0 and modifproperties[counter][2] != 0:                                         # Solving given P and T
+#         modifproperties[counter][0] = modifproperties[counter][1] * modifproperties[counter][2] / R
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][1] != 0 and modifproperties[counter][3] != 0:                                         # Solving given P and u
+#         modifproperties[counter][0] = modifproperties[counter][3] / Cv
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][1] != 0 and modifproperties[counter][4] != 0:                                         # Solving given P and h
+#         modifproperties[counter][0] = modifproperties[counter][4] / Cp
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][1] != 0 and modifproperties[counter][5] != 0:                                         # Solving given P and s
+#         modifproperties[counter][0] = math.exp((modifproperties[counter][5] - dats + R * math.log(modifproperties[counter][1] / datP)) * 1 / Cp) * modifproperties[counter][0]
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#
+#     elif modifproperties[counter][2] != 0 and modifproperties[counter][3] != 0:                                         # Solving given v and u
+#         modifproperties[counter][0] = modifproperties[counter][3] / Cv
+#         modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][2] != 0 and modifproperties[counter][4] != 0:                                         # Solving if given v and h
+#         modifproperties[counter][0] = modifproperties[counter][4] / Cp
+#         modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]  # P = RT/v
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][5] = Cp * math.log(modifproperties[counter][0] / datT) - R * math.log(modifproperties[counter][1] / datP)
+#
+#     elif modifproperties[counter][2] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given v and s
+#         modifproperties[counter][0] = math.exp((modifproperties[counter][5] - dats - R * math.log(modifproperties[counter][2] / datv)) / Cv) * datT
+#         modifproperties[counter][1] = (R * modifproperties[counter][0]) / modifproperties[counter][2]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#
+#     elif modifproperties[counter][3] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given u and s
+#         modifproperties[counter][0] = modifproperties[counter][3] / Cv
+#         modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][4] = Cp * modifproperties[counter][0]
+#
+#     elif modifproperties[counter][4] != 0 and modifproperties[counter][5] != 0:                                         # Solving if given h and s
+#         modifproperties[counter][0] = modifproperties[counter][4] / Cp
+#         modifproperties[counter][1] = math.exp((1 / R * (Cp * math.log(modifproperties[counter][0] / datT) + modifproperties[counter][5] - dats))) * datP
+#         modifproperties[counter][2] = R * modifproperties[counter][0] / modifproperties[counter][1]
+#         modifproperties[counter][3] = Cv * modifproperties[counter][0]
+#
+#     return modifproperties
+
+
+
+
+
+
+
+
+
 
 
 

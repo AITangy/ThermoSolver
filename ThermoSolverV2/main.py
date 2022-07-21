@@ -38,7 +38,7 @@ def mainsolver(properties,processes,plotinfo,definedstates):
     defmessage(definedstates,properties)
     print(passes)
     print(plotinfo)
-    plotaround(plotinfo)
+#    plotaround(plotinfo)
 
 
 mainsolver(properties,processes,plotinfo,definedstates)
