@@ -15,3 +15,5 @@ cat = FullyDefinernew(cat)
 print(cat)
 dog = isenaccounterbackv2(dog,cat,2,0)
 print(dog)
+
+print(FullyDefinernew([636.47,100*10**5,0,0,0,0]))

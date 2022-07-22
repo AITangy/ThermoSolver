@@ -20,7 +20,7 @@ def mainsolver(properties,processes,plotinfo,definedstates):
                                                                                                                         # Initiallising a sum of the number of information in each state
                                                                                                                         # Looping through each property within a state.
             if definedstates[i]==False:
-                properties,plotinfo = CheckDefine(i,properties,plotinfo)
+                properties,plotinfo,definedstates = CheckDefine(i,properties,plotinfo,definedstates)
             newinfo,properties,plotinfo = CheckRelation(i,newinfo, properties,plotinfo)
                                                                                                                         # If we have information on next h and previous h and are missing information on q or w but have one of them then we can calulate the other
 # Calulcating information on Qtransfer or Wtransfer

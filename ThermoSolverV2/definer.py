@@ -5,7 +5,7 @@ import numpy as np
 from statename import adjstates
 
 
-def CheckDefine(i,properties,plotinfo):
+def CheckDefine(i,properties,plotinfo,definedstates):
     sum = 0
 
     nextstate,prevstate = adjstates(i)
@@ -35,7 +35,7 @@ def CheckDefine(i,properties,plotinfo):
             plotinfo[prevstate][accuracy - 1] = properties[i]
 
 
-    return properties, plotinfo
+    return properties, plotinfo,definedstates
 
 
 
