@@ -4,7 +4,7 @@ import numpy as np
 
 
                                                                                                                         # defining variables
-accuracy = 10                                                                                                       # Determines the number of points that will be plotted for each process.
+accuracy = 20                                                                                                       # Determines the number of points that will be plotted for each process.
 numberofstates  = 3                                                                                                     # =numberofcompoenents = numberofprocesses
 
 T= [0]*numberofstates                                                                                                   # intiallising lists of properties
