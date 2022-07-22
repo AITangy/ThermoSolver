@@ -34,13 +34,13 @@ def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
     else:
         if processes[prevstate][5] == "Compressor" or processes[prevstate][5] =="Pump" or processes[prevstate][5] == "Heater" and processes[prevstate][2]!=0:
 
-            properties[prevstate][4] = (isenproperties[prevstate][4] - properties[i][4]) / processes[prevstate][2] + properties[i][4]
+            properties[prevstate][4] = (isenproperties[prevstate][4] - properties[i][4]) * processes[prevstate][2] + properties[i][4]
             properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
 
         elif processes[prevstate][5] == ["Turbine"] or processes[prevstate][5]=="Cooler" and processes[prevstate][2]!=0:
 
-            properties[prevstate][4] = processes[prevstate][2] * (isenproperties[prevstate][4] - properties[i][4]) + properties[i][4]
+            properties[prevstate][4] =   (isenproperties[prevstate][4] - properties[i][4])/processes[prevstate][2] + properties[i][4]
             properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
     return definedstates,properties
@@ -51,7 +51,7 @@ def isenaccounterbackv2(undefstate,defstate,adjstate,i):
 
     if processes[adjstate][5] == ["Compressor"] or processes[adjstate][5] == ["Pump"] or processes[adjstate][5] == ["Heater"]:
 
-        undefstate[4] = processes[i][2] * (undefstate[4] - defstate[4]) + defstate[4]
+        undefstate[4] = processes[adjstate][2] * (undefstate[4] - defstate[4]) + defstate[4]
 
         undefstate = FullyDefinernew(undefstate)
 
