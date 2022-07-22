@@ -7,7 +7,7 @@ from propertiesaround import checkaround
 from info import properties, processes,  definedstates, plotinfo,  numberofstates, graphs,numberofplots
 
 
-def mainsolver(properties,processes,plotinfo,definedstates):
+def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
 
 
     newinfo = True                                                                                                      # Defining a variable to check with each pass whether we have got some new information
@@ -30,15 +30,14 @@ def mainsolver(properties,processes,plotinfo,definedstates):
 
 # We need to solve for information on properties around every defined state, and account for the intermediate information which should be plotted
             properties,plotinfo,newinfo = checkaround(properties, processes,plotinfo, definedstates,newinfo, i)
+    print("debug")
+    plotaround(plotinfo,plotnumber)
 
 
 
 
 
-    defmessage(definedstates,properties)
-    plotTs(plotinfo,0)
-processes[2][2]=1
-mainsolver(properties,processes,plotinfo,definedstates)
+mainsolver(properties,processes,plotinfo,definedstates,0)
 
 
 
