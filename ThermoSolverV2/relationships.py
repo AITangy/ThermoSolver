@@ -8,7 +8,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
     # Here we go through and try to find new information by accounting for the process type of each of the components
 
     nextstate,prevstate = statename.adjstates(i)
-
+    plotinfo = relationshipintermediate(plotinfo, i)
     if processes[i][4] == ["Isobaric"]:  # For strings the values stores inside must be refered to in square brackets for conditional statements however this is not true for integers.
         plotinfo = relationshipintermediate(plotinfo, i)
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
@@ -17,12 +17,6 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
             for j in range(0,accuracy):
                 plotinfo[i][j][1] = properties[nextstate][1]
-
-
-
-
-
-
 
         elif properties[i][1] != 0 and properties[nextstate][1] == 0:
             newinfo = True
@@ -41,7 +35,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
 
     if processes[i][4] == ["Isochoric"]:
-
+        plotinfo = relationshipintermediate(plotinfo, i)
         if properties[nextstate][2] != 0 and properties[i][2] == 0:
             newinfo = True
             properties[i][2] = properties[nextstate][2]
@@ -63,7 +57,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
 
     if processes[i][4] == ["Isoenergetic"]:
-
+        plotinfo = relationshipintermediate(plotinfo, i)
         if properties[nextstate][3] != 0 and properties[i][3] == 0:
             newinfo = True
             properties[i][3] = properties[nextstate][3]
@@ -90,6 +84,7 @@ def CheckRelation(i, newinfo, properties,plotinfo):
 
     if processes[i][4] == ["Isenthalpic"]:
 
+        plotinfo = relationshipintermediate(plotinfo, i)
         if properties[nextstate][4] != 0 and properties[i][4] == 0:
             newinfo = True
             properties[i][4] = properties[nextstate][4]

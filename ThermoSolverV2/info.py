@@ -15,7 +15,7 @@ componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
 
-one=1
+
 
 # defining known (state/property/ratio) information
 

@@ -46,10 +46,10 @@ def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
     return definedstates,properties
 
 
-def isenaccounterbackv2(undefstate,defstate,prevstate,i):
+def isenaccounterbackv2(undefstate,defstate,adjstate,i):
 
 
-    if processes[prevstate][5] == ["Compressor"] or processes[prevstate][5] == ["Pump"] or processes[prevstate][5] == ["Heater"]:
+    if processes[adjstate][5] == ["Compressor"] or processes[adjstate][5] == ["Pump"] or processes[adjstate][5] == ["Heater"]:
 
         undefstate[4] = processes[i][2] * (undefstate[4] - defstate[4]) + defstate[4]
 
@@ -59,13 +59,14 @@ def isenaccounterbackv2(undefstate,defstate,prevstate,i):
         # We need to modify the fully definer algorythm to account for the fact that we might not have the full list of porperites in our system and to jjust solve what it can...
 
 
-    if processes[prevstate][5] == ["Turbine"] or processes[prevstate][5]==["Cooler"]:
+    if processes[adjstate][5] == ["Turbine"] or processes[adjstate][5]==["Cooler"]:
 
-        undefstate[4] = (undefstate[4] - defstate[4]) / processes[prevstate][2] + defstate[4]
+        undefstate[4] = (undefstate[4] - defstate[4]) / processes[adjstate][2] + defstate[4]
 
         undefstate = FullyDefinernew(undefstate)
 
 
 
     return undefstate
+
 
