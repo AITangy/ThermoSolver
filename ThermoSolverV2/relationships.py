@@ -1,4 +1,4 @@
-from info import processes,ratios
+from info import ratios,processes
 import statename
 from info import accuracy
 import numpy as np

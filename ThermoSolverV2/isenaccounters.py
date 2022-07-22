@@ -38,7 +38,7 @@ def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
             properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
 
-        elif processes[prevstate][5] == "Turbine" or processes[prevstate][5]=="Cooler" and processes[prevstate][2]!=0:
+        elif processes[prevstate][5] == ["Turbine"] or processes[prevstate][5]=="Cooler" and processes[prevstate][2]!=0:
 
             properties[prevstate][4] = processes[i][2] * (isenproperties[prevstate][4] - properties[i][4]) + properties[i][4]
             properties[prevstate] = FullyDefinernew(properties[prevstate])

@@ -2,9 +2,9 @@
 from definer import  CheckDefine, defmessage
 from relationships import CheckRelation
 from qandw import calcqandw, useqandw
-from plotter import plotaround, plotbycomponent
+from plotter import plotaround, plotPv,plotTs,ploths
 from propertiesaround import checkaround
-from info import properties, processes,  definedstates, plotinfo,  numberofstates
+from info import properties, processes,  definedstates, plotinfo,  numberofstates, graphs,numberofplots
 
 
 def mainsolver(properties,processes,plotinfo,definedstates):
@@ -36,11 +36,10 @@ def mainsolver(properties,processes,plotinfo,definedstates):
 
 
     defmessage(definedstates,properties)
-
-    plotaround(plotinfo)
-
-
+    plotTs(plotinfo,0)
+processes[2][2]=1
 mainsolver(properties,processes,plotinfo,definedstates)
+
 
 
 

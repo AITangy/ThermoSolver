@@ -6,6 +6,7 @@ import numpy as np
                                                                                                                         # defining variables
 accuracy = 20                                                                                                       # Determines the number of points that will be plotted for each process.
 numberofstates  = 3                                                                                                     # =numberofcompoenents = numberofprocesses
+numberofplots = 10
 
 T= [0]*numberofstates                                                                                                   # intiallising lists of properties
 P=[0]*numberofstates
@@ -41,6 +42,7 @@ properties = np.zeros([numberofstates,6])                                       
 processes = np.zeros([numberofstates,8], dtype=object)
 ratios = np.zeros([numberofstates,3])
 plotinfo = np.zeros([numberofstates,accuracy,6])                                                         # The 3d matrix is alot of data to pass around to just pass around one 2d slice of it at a time into what we are doing.
+graphs = np.zeros([numberofplots,numberofstates,accuracy,6])
 
 
 definedstates = np.zeros([numberofstates], dtype=bool)

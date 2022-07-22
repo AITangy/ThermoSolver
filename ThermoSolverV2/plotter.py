@@ -4,26 +4,35 @@ from bokeh.plotting import figure, show
 from info import numberofstates
 from info import accuracy
 def plotaround(plotinfo):
+    plotPv(plotinfo)
+    ploths(plotinfo)
+    plotTs(plotinfo)
 
-    plot1 = figure(title="P v Diagram", x_axis_label='v', y_axis_label='P')
-    for i in range(0,numberofstates):
-        plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i), line_width=2,color =Category10[numberofstates][i])
-    show(plot1)
 
-    plot2 = figure(title="T s Diagram", x_axis_label='s', y_axis_label='T')
-    for i in range(0, numberofstates):
-        plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i), line_width=2, color = Category10[numberofstates][i])
-    show(plot2)
-
-    plot3 = figure(title="h s Diagram", x_axis_label='s', y_axis_label='h')
-    for i in range(0, numberofstates):
-        plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i), line_width=2,color = Category10[numberofstates][i])
-    show(plot3)
 
 
 #    show(plot3)
 
-def plotbycomponent():
+def plotPv(plotinfo):
+    plot1 = figure(title="P v Diagram", x_axis_label='v', y_axis_label='P')
+    for i in range(0, numberofstates):
+        plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i), line_width=2,
+                   color=Category10[numberofstates][i])
+    show(plot1)
+
+def plotTs(plotinfo,plotnumber):
+    plot2 = figure(title="T s Diagram" + str(plotnumber+1), x_axis_label='s', y_axis_label='T')
+    for i in range(0, numberofstates):
+        plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i), line_width=2,
+                   color=Category10[numberofstates][i])
+    show(plot2)
+def ploths(plotinfo):
+    plot3 = figure(title="h s Diagram", x_axis_label='s', y_axis_label='h')
+    for i in range(0, numberofstates):
+        plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i), line_width=2,
+                   color=Category10[numberofstates][i])
+    show(plot3)
+
     print()
 
 
