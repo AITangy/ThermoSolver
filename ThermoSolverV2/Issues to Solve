@@ -1,0 +1,2 @@
+Weird bug causing component two to wrap when given low isentropic efficiency ( e.g 2)
+Modularise the isenaccounter code
