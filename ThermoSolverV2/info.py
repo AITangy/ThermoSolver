@@ -21,7 +21,7 @@ componenttype[2] = ["Turbine"]
 
 wtransfer[0] = 3000000
 # qtransfer[0] = 0
-isenefficiency[2] = 0.9
+isenefficiency[2] = 0.2
 
 
 datT = 273.16
