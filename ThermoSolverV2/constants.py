@@ -80,12 +80,4 @@ def Helium():
 
 
 
-def Hydrogen(M,R,Cp,Cv,gamma):
-    M = 2016
-    R = 4120                                                                                                                # defining perfect gas / thermodynamic properties
-    Cp = 14310
-    Cv = 10180
-    gamma = 1.41
-    return M,R,Cp,Cv,gamma
-
 

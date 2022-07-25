@@ -1,7 +1,7 @@
 from initialise import *
-from constants import Air,Oxygen,Nitrogen,AtmNitrogen,C02,C0,Hydrogen,Methane,Ethane,Helium
+import constants
 
-M,R,Cp,Cv,gamma = Hydrogen()
+M,R,Cp,Cv,gamma = constants.Hydrogen()
 #info.py passes known data into data structures
 g = 9.81
 T[0]=300
