@@ -4,10 +4,10 @@ from relationships import CheckRelation
 from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths
 from propertiesaround import checkaround
-from info import properties, processes,  definedstates, plotinfo,  numberofstates
+from info import properties, processes,ratios,  definedstates, plotinfo,  numberofstates
 
 
-def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
+def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
 
 
     newinfo = True                                                                                                      # Defining a variable to check with each pass whether we have got some new information
@@ -21,7 +21,7 @@ def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
                                                                                                                         # Looping through each property within a state.
             if definedstates[i]==False:
                 properties,plotinfo,definedstates = CheckDefine(i,properties,plotinfo,definedstates)
-            newinfo,properties,plotinfo = CheckRelation(i,newinfo, properties,plotinfo)
+            newinfo,properties,plotinfo = CheckRelation(i,newinfo, properties,processes,ratios,plotinfo)
                                                                                                                         # If we have information on next h and previous h and are missing information on q or w but have one of them then we can calulate the other
 # Calulcating information on Qtransfer or Wtransfer
             properties,processes = calcqandw(properties,processes,i)
@@ -31,13 +31,13 @@ def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
 # We need to solve for information on properties around every defined state, and account for the intermediate information which should be plotted
             properties,plotinfo,newinfo = checkaround(properties,processes,plotinfo, definedstates,newinfo, i)
     defmessage(definedstates,properties)
-    plotPv(plotinfo,plotnumber)
+    plotaround(plotinfo,plotnumber)
 
 
 
 
 
-mainsolver(properties,processes,plotinfo,definedstates,0)
+mainsolver(properties,processes,ratios,plotinfo,definedstates,0)
 
 
 

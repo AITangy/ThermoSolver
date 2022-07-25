@@ -1,10 +1,10 @@
-from info import ratios,processes
+
 import statename
 from info import accuracy
 import numpy as np
 from definer import FullyDefinernew
 
-def CheckRelation(i, newinfo, properties,plotinfo):
+def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
     # Here we go through and try to find new information by accounting for the process type of each of the components
 
     nextstate,prevstate = statename.adjstates(i)

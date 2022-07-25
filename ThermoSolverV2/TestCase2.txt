@@ -1,0 +1,23 @@
+processtype[0] = ["Isentropic"]
+processtype[1] = ["Isochoric"]
+processtype[2] = ["Isentropic"]
+processtype[3] = ["Isochoric"]
+
+
+componenttype[0] = ["Compressor"]
+componenttype[1] = ["Heater"]
+componenttype[2] = ["Turbine"]
+componenttype[3] = ["Cooler"]
+
+
+
+vratio[0] = 9
+
+
+
+
+# defining known (state/property/ratio) information
+
+wtransfer[0] = 3000000
+# qtransfer[0] = 0
+

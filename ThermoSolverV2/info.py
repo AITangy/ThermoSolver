@@ -1,20 +1,31 @@
 from initialise import *
 import constants
 
-M,R,Cp,Cv,gamma = constants.Hydrogen()
+M,R,Cp,Cv,gamma = constants.Air()
+
 #info.py passes known data into data structures
 g = 9.81
-T[0]=300
-P[0] = 1000000
-P[1] = 10000000
 
-processtype[0] = ["Isothermal"]
-processtype[1] = ["Isobaric"]
+P[0] = 1*10**5
+T[0] = 15+273
+T[2] = 3000+273
+
+
+processtype[0] = ["Isentropic"]
+processtype[1] = ["Isochoric"]
 processtype[2] = ["Isentropic"]
+processtype[3] = ["Isochoric"]
+
 
 componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
+componenttype[3] = ["Cooler"]
+
+
+
+vratio[0] = 9
+
 
 
 
