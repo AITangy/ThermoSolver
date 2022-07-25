@@ -1,7 +1,37 @@
 from definer import FullyDefinernew
-from info import processes
 
-def isenaccounter(i,nextstate,isenproperties,definedstates, properties):
+
+
+
+
+def isenaccounterv2(undefstate,defstate,startstate,processes):
+
+
+    if processes[startstate][5] == ["Compressor"] or processes[startstate][5] == ["Pump"] or processes[startstate][5] == ["Heater"]:
+        undefstate[4] = (undefstate[4] - defstate[4]) / processes[startstate][2] + defstate[4]
+
+
+
+        undefstate = FullyDefinernew(undefstate)
+
+        # The current way Fully Definer alogrythm works is under the assumptiion that we import the full list of properites
+        # We need to modify the fully definer algorythm to account for the fact that we might not have the full list of porperites in our system and to jjust solve what it can...
+
+
+    if processes[startstate][5] == ["Turbine"] or processes[startstate][5]==["Cooler"]:
+
+        undefstate[4] = processes[startstate][2] * (undefstate[4] - defstate[4]) + defstate[4]
+
+        undefstate = FullyDefinernew(undefstate)
+
+
+
+    return undefstate
+
+
+
+
+def isenaccounter(i,nextstate,isenproperties,definedstates, properties,processes):
 
 
 
@@ -22,7 +52,8 @@ def isenaccounter(i,nextstate,isenproperties,definedstates, properties):
             definedstates[nextstate] = True
     return definedstates,properties
 
-def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
+
+def isenaccounterback(i,prevstate,isenproperties,definedstates,properties,processes):
 
 
 
@@ -44,29 +75,3 @@ def isenaccounterback(i,prevstate,isenproperties,definedstates,properties):
             properties[prevstate] = FullyDefinernew(properties[prevstate])
             definedstates[prevstate] = True
     return definedstates,properties
-
-
-def isenaccounterbackv2(undefstate,defstate,adjstate,i):
-
-
-    if processes[adjstate][5] == ["Compressor"] or processes[adjstate][5] == ["Pump"] or processes[adjstate][5] == ["Heater"]:
-
-        undefstate[4] = processes[adjstate][2] * (undefstate[4] - defstate[4]) + defstate[4]
-
-        undefstate = FullyDefinernew(undefstate)
-
-        # The current way Fully Definer alogrythm works is under the assumptiion that we import the full list of properites
-        # We need to modify the fully definer algorythm to account for the fact that we might not have the full list of porperites in our system and to jjust solve what it can...
-
-
-    if processes[adjstate][5] == ["Turbine"] or processes[adjstate][5]==["Cooler"]:
-
-        undefstate[4] = (undefstate[4] - defstate[4]) / processes[adjstate][2] + defstate[4]
-
-        undefstate = FullyDefinernew(undefstate)
-
-
-
-    return undefstate
-
-

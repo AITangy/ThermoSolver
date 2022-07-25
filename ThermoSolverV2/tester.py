@@ -1,19 +1,29 @@
 from definer import FullyDefinernew,mgetH
 from isenaccounters import isenaccounterbackv2
 from info import gamma
-cat = [0]*6
-dog = [0]*6
-cat[0]=300
-cat[1]=10*10**5
-dog[1] = 100*10**5
-dog[0] = 586.005
-dog = mgetH(dog,0)
+import numpy as np
+numberofstates = 3
+startstate = 2
+i = 0
+processes = np.zeros([numberofstates,8], dtype=object)
 
-print(cat)
-print(dog)
-cat = FullyDefinernew(cat)
-print(cat)
-dog = isenaccounterbackv2(dog,cat,2,0)
-print(dog)
+processes[startstate][2] = 0.85
+processes[startstate][5] = ["Compressor"]
 
-print(FullyDefinernew([636.47,100*10**5,0,0,0,0]))
+
+undefstate = [0]*6
+defstate = [0]*6
+
+defstate[0] = 300
+defstate[1] = 10*10**5
+defstate = FullyDefinernew(defstate)
+
+undefstate[1] = 100*10**5                   # If only undefstate[0] is defined then isentropic fefficiencty does not give us new iformation as it operates on the pricniple that the tempreture ois not yet defined
+undefstate[0] = 586                         # Normally we woild use a simple alogrythm for this but here we just input it for testing puorpose.
+undefstate = mgetH(undefstate,0)
+
+
+
+undefstate = isenaccounterbackv2(undefstate,defstate,startstate,processes)
+
+print(undefstate)

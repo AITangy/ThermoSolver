@@ -9,7 +9,7 @@ P[1] = 10000000
 
 processtype[0] = ["Isothermal"]
 processtype[1] = ["Isobaric"]
-processtype[2] = ["General"]
+processtype[2] = ["Isentropic"]
 
 componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
@@ -21,7 +21,7 @@ componenttype[2] = ["Turbine"]
 
 wtransfer[0] = 3000000
 # qtransfer[0] = 0
-isenefficiency[2] = 0.2
+
 
 
 datT = 273.16
