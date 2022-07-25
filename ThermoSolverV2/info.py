@@ -1,9 +1,10 @@
 from initialise import *
-from constants import *
+from constants import Air,Oxygen,Nitrogen,AtmNitrogen,C02,C0,Hydrogen,Methane,Ethane,Helium
 
+M,R,Cp,Cv,gamma = Hydrogen()
 #info.py passes known data into data structures
-
-T[1] = 300
+g = 9.81
+T[0]=300
 P[0] = 1000000
 P[1] = 10000000
 

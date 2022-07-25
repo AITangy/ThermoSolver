@@ -1,6 +1,6 @@
 import statename
 
-from constants import *
+from info import M,R,Cp,Cv,gamma
 
 # If we have information on next h and previous h and are missing information on q or w but have one of them then we can calulate the other
 # Calulcating information on Qtransfer or Wtransfer

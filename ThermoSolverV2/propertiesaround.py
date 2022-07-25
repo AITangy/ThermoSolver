@@ -1,10 +1,10 @@
 from statename import adjstates
 from isenaccounters import isenaccounterv2
 from definer import mgetH,FullyDefinernew
-from constants import *
+
 import numpy as np
 import math
-from info import accuracy
+from info import accuracy,M,R,Cp,Cv,gamma
 
 
 

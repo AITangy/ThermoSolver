@@ -4,7 +4,7 @@ from relationships import CheckRelation
 from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths
 from propertiesaround import checkaround
-from info import properties, processes,  definedstates, plotinfo,  numberofstates, graphs,numberofplots
+from info import properties, processes,  definedstates, plotinfo,  numberofstates
 
 
 def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
@@ -30,8 +30,8 @@ def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
 
 # We need to solve for information on properties around every defined state, and account for the intermediate information which should be plotted
             properties,plotinfo,newinfo = checkaround(properties,processes,plotinfo, definedstates,newinfo, i)
-    print("debug")
-    plotaround(plotinfo,plotnumber)
+    defmessage(definedstates,properties)
+    plotPv(plotinfo,plotnumber)
 
 
 

@@ -1,6 +1,6 @@
 from definer import FullyDefinernew,mgetH
-from isenaccounters import isenaccounterbackv2
-from info import gamma
+from isenaccounters import isenaccounterv2
+from info import M,R,Cp,Cv,gamma
 import numpy as np
 numberofstates = 3
 startstate = 2
@@ -24,6 +24,6 @@ undefstate = mgetH(undefstate,0)
 
 
 
-undefstate = isenaccounterbackv2(undefstate,defstate,startstate,processes)
+undefstate = isenaccounterv2(undefstate,defstate,startstate,processes)
 
 print(undefstate)

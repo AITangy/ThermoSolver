@@ -1,6 +1,6 @@
-from constants import *
+
 import math
-from info import definedstates, numberofstates,accuracy,datT,datP,datv,dats
+from info import definedstates, numberofstates,accuracy,datT,datP,datv,dats,M,R,Cp,Cv,gamma
 import numpy as np
 from statename import adjstates
 
