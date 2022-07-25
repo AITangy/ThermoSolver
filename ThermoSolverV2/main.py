@@ -29,7 +29,7 @@ def mainsolver(properties,processes,plotinfo,definedstates,plotnumber):
             properties,processes = useqandw(properties,processes,i)
 
 # We need to solve for information on properties around every defined state, and account for the intermediate information which should be plotted
-            properties,plotinfo,newinfo = checkaround(properties, processes,plotinfo, definedstates,newinfo, i)
+            properties,plotinfo,newinfo = checkaround(properties,processes,plotinfo, definedstates,newinfo, i)
     print("debug")
     plotaround(plotinfo,plotnumber)
 

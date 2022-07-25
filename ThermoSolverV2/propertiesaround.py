@@ -23,9 +23,8 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 properties[nextstate] = FullyDefinernew(isenproperties[nextstate])
 
 
-                # plotinfo[i][0] = properties[i]
-                # plotinfo[i][accuracy-1] = properties[nextstate]
-                # plotinfo[nextstate][0] = properties[nextstate]
+
+
 
 
                 # Now that we have caluclated some new properties we outhgt to try and plot what is going on... It could ctreate a real problem if the system is overdefcined, even if it is correct if two states are fully defined and adjacent from the outset we are not going to be able to plot the stuff inbetween
@@ -92,7 +91,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
 
 
 
-
+                                    # Im going to modularise this algorythm and place it as a functiom within a different module.
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
                 plotinfo[prevstate][accuracy - 1] = properties[i]
@@ -105,7 +104,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                         plotinfo[prevstate][j][0] = properties[i][0] * (plotinfo[prevstate][j][1]/properties[i][1])**((gamma - 1) / gamma)  # here we are storing the isentropic Tempreturues, however now we need to account for isentropic efficiency and store the real tempreratures
                         isenindex = 0                                                                                   # Setting a vairable to track which property has the isentropic assumption in order to remove it once the algorythm has calculated h
                         plotinfo[prevstate][j] = mgetH(plotinfo[prevstate][j],isenindex)                                        # We don't actually want to define the whole thing herre, what we need is an algorythm that will just get us h!
-                        plotinfo[prevstate][j] = isenaccounterv2(plotinfo[prevstate][j],properties[i],prevstate,i)
+                        plotinfo[prevstate][j] = isenaccounterv2(plotinfo[prevstate][j],properties[i],prevstate,processes)
                 current,prevprevstate = adjstates(prevstate)
                 plotinfo[prevprevstate][accuracy-1] = plotinfo[prevstate][0]                                            # This alogrytm is really nice hiowever it really does not make any sense to use it in thw backwards fashion
 
@@ -138,4 +137,55 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
 
 
 
+def intermediatestatesP(properties,plotinfo,newinfo,i,proptype,processes):
+    nextstate,prevstate = adjstates(i)
 
+    # Im going to modularise this algorythm and place it as a functiom within a different module.
+    plotinfo[i][0] = properties[i]
+    plotinfo[prevstate][0] = properties[prevstate]
+    plotinfo[prevstate][accuracy - 1] = properties[i]
+    intermediates = np.linspace(plotinfo[prevstate][0][proptype], plotinfo[i][0][proptype],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+    plotinfo[prevstate][:, proptype] = intermediates
+
+
+
+    for j in range(0, accuracy):
+
+        if processes[prevstate][2] != 0:  # We need to account for the fact that if the info is about T then it only works if isentropic!
+            newinfo = True
+            plotinfo[prevstate][j][0] = properties[i][0] * (plotinfo[prevstate][j][1] / properties[i][1]) ** ((gamma - 1) / gamma)  # here we are storing the isentropic Tempreturues, however now we need to account for isentropic efficiency and store the real tempreratures
+
+            isenindex = 0  # Setting a vairable to track which property has the isentropic assumption in order to remove it once the algorythm has calculated h
+            plotinfo[prevstate][j] = mgetH(plotinfo[prevstate][j],isenindex)  # We don't actually want to define the whole thing herre, what we need is an algorythm that will just get us h!
+            plotinfo[prevstate][j] = isenaccounterv2(plotinfo[prevstate][j], properties[i], prevstate, processes)
+    current, prevprevstate = adjstates(prevstate)
+    plotinfo[prevprevstate][accuracy - 1] = plotinfo[prevstate][0]  # This alogrytm is really nice hiowever it really does not make any sense to use it in thw backwards fashion
+
+    return properties,plotinfo,newinfo
+
+
+def intermediatestatesv(properties, plotinfo, newinfo, i, proptype, processes):
+    nextstate, prevstate = adjstates(i)
+
+    # Im going to modularise this algorythm and place it as a functiom within a different module.
+    plotinfo[i][0] = properties[i]
+    plotinfo[prevstate][0] = properties[prevstate]
+    plotinfo[prevstate][accuracy - 1] = properties[i]
+    intermediates = np.linspace(plotinfo[prevstate][0][proptype], plotinfo[i][0][proptype],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+    plotinfo[prevstate][:, proptype] = intermediates
+
+    for j in range(0, accuracy):
+
+        if processes[prevstate][
+            2] != 0:  # We need to account for the fact that if the info is about T then it only works if isentropic!
+            newinfo = True
+            plotinfo[prevstate][j][0] = properties[i][0] * (plotinfo[prevstate][j][1] / properties[i][1]) ** (( gamma - 1) / gamma)  # here we are storing the isentropic Tempreturues, however now we need to account for isentropic efficiency and store the real tempreratures
+
+
+            isenindex = 0  # Setting a vairable to track which property has the isentropic assumption in order to remove it once the algorythm has calculated h
+            plotinfo[prevstate][j] = mgetH(plotinfo[prevstate][j],isenindex)  # We don't actually want to define the whole thing herre, what we need is an algorythm that will just get us h!
+            plotinfo[prevstate][j] = isenaccounterv2(plotinfo[prevstate][j], properties[i], prevstate, processes)
+    current, prevprevstate = adjstates(prevstate)
+    plotinfo[prevprevstate][accuracy - 1] = plotinfo[prevstate][0]  # This alogrytm is really nice hiowever it really does not make any sense to use it in thw backwards fashion
+
+    return properties, plotinfo, newinfo
