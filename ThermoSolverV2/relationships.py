@@ -1,8 +1,11 @@
 
 import statename
-from info import accuracy
+from info import accuracy,M,R,Cp,Cv,gamma
 import numpy as np
-from definer import FullyDefinernew
+from definer import FullyDefinernew,mgetH
+from isenaccounters import isenaccounterv2
+
+
 
 def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
     # Here we go through and try to find new information by accounting for the process type of each of the components
@@ -126,10 +129,32 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             for j in range(0,accuracy):
                 plotinfo[i][j][0] = properties[nextstate][0]
 
+    newinfo,properties = ratiochecker(properties,processes,ratios,i,newinfo)
 
 
 
     # Here we can account for ratio relationships in the processes if they happen to exist!
+
+
+
+
+
+    return newinfo, properties,plotinfo
+
+
+def relationshipintermediate(plotinfo,i):
+
+    if plotinfo[i][accuracy-1][5]!=0 and plotinfo[i][0][5]!=0:
+        intermediates = np.linspace(plotinfo[i][0][5], plotinfo[i][accuracy-1][5],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+        plotinfo[i][:, 5] = intermediates
+        for j in range(0,accuracy):
+            plotinfo[i][j] = FullyDefinernew(plotinfo[i][j])
+
+    return plotinfo
+
+def ratiochecker(properties,processes,ratios,i,newinfo):
+
+    nextstate,prevstate = statename.adjstates(i)
 
     if ratios[i][0] != 0:
         if properties[nextstate][4] != 0 and properties[i][4] == 0:
@@ -151,6 +176,7 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
                 print()
 
     if ratios[i][1] != 0:
+
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
             newinfo = True
             properties[i][1] = properties[nextstate][1] / ratios[i][1]
@@ -174,6 +200,7 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
                 print()
 
     if ratios[i][2] != 0:
+
         if properties[nextstate][2] != 0 and properties[i][2] == 0:
             newinfo = True
             properties[i][2] = properties[nextstate][2] / ratios[i][2]
@@ -192,21 +219,4 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             if properties[nextstate][1] == 0 and properties[i][1] == 0:
                 print()
 
-
-
-
-    return newinfo, properties,plotinfo
-
-
-def relationshipintermediate(plotinfo,i):
-
-    if plotinfo[i][accuracy-1][5]!=0 and plotinfo[i][0][5]!=0:
-        intermediates = np.linspace(plotinfo[i][0][5], plotinfo[i][accuracy-1][5],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
-        plotinfo[i][:, 5] = intermediates
-        for j in range(0,accuracy):
-            plotinfo[i][j] = FullyDefinernew(plotinfo[i][j])
-
-    return plotinfo
-
-def ratiochecker(properties,processes,ratios,i):
-    nextstate,prevstate = statename.adjstates(i)
+    return newinfo,properties
