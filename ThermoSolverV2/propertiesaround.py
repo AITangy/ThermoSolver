@@ -8,7 +8,7 @@ from info import accuracy,M,R,Cp,Cv,gamma
 
 
 
-def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
+def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i):
     nextstate,prevstate = adjstates(i)
     isenproperties = np.copy(properties)
 
@@ -22,7 +22,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 properties[nextstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)))/properties[nextstate][0])
                                                                                                                 # We want to fully define the isentropic matrix to allow us to use its values if it turns out to be good, this could also aid in drawing graphs where we could use the isentropic case to show how isentropic efficencies are affecting the graph, sicne the isentropic stuff updates each tijme perhaps we need a "saved" one which keeps the isentropic function rather than updating with the main so we can seperate what was calculated isentropically and graph it distinctly
                 properties[nextstate] = FullyDefinernew(isenproperties[nextstate])
-
+                definedstates[nextstate]=True
                 plotinfo[i][0] = properties[i]
                 plotinfo[nextstate][0] = properties[nextstate]
                 plotinfo[i][accuracy - 1] = properties[nextstate]
@@ -48,6 +48,8 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 properties[nextstate] = mgetH(properties[nextstate],0)
 
                 properties[nextstate] = isenaccounterv2(properties[nextstate],properties[i],i,processes)
+                definedstates[nextstate] = True
+
 
                 plotinfo[i][0] = properties[i]
                 plotinfo[nextstate][0] = properties[nextstate]
@@ -76,7 +78,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                 properties[nextstate] = mgetH(properties[nextstate], 0)
 
                 properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes)
-
+                definedstates[nextstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[nextstate][0] = properties[nextstate]
                 plotinfo[i][accuracy - 1] = properties[nextstate]
@@ -94,6 +96,39 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
 
 
 
+            if ratios[i][0]!=0 and processes[i][2]!=0:
+                if properties[i][1]!=0 and properties[nextstate][1]==0:
+                    print()
+                if properties[nextstate][1]==0 and properties[i][1]==0:
+                    print()
+                if properties[i][2]!=0 and properties[nextstate][2]==0:
+                    print()
+                if properties[nextstate][2]==0 and properties[i][2]==0:
+                    print()
+
+
+            if ratios[i][1]!=0 and processes[i][2]!=0:
+                if properties[i][0] != 0 and properties[nextstate][0] == 0:
+                    print()
+                if properties[nextstate][0] == 0 and properties[i][0] == 0:
+                    print()
+                if properties[i][2] != 0 and properties[nextstate][2] == 0:
+                    print()
+                if properties[nextstate][2] == 0 and properties[i][2] == 0:
+                    print()
+
+            if ratios[i][2]!=0 and processes[i][2]!=0:
+                if properties[i][0] != 0 and properties[nextstate][0] == 0:
+                    print()
+                if properties[nextstate][0] == 0 and properties[i][0] == 0:
+                    print()
+                if properties[i][1] != 0 and properties[nextstate][1] == 0:
+                    print()
+                if properties[nextstate][1] == 0 and properties[i][1] == 0:
+                    print()
+
+
+
 
 
         if definedstates[prevstate] == False:
@@ -103,7 +138,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
 
                 properties[prevstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)) )/properties[prevstate][0])
                 properties[prevstate] = FullyDefinernew(isenproperties[prevstate])
-
+                definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
                 plotinfo[prevstate][accuracy - 1] = properties[i]
@@ -124,7 +159,7 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
 
                 properties[prevstate][0] = properties[i][0] * (properties[prevstate][1] / properties[i][1]) ** ((gamma - 1) / gamma)
                 properties[prevstate] = FullyDefinernew(properties[prevstate])
-
+                definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
                 plotinfo[prevstate][accuracy - 1] = properties[i]
@@ -136,26 +171,12 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                     plotinfo[prevstate][j][0] = properties[i][0] * (plotinfo[prevstate][j][1]/properties[i][1])**((gamma - 1) / gamma)
                     plotinfo[prevstate][j] = FullyDefinernew(plotinfo[prevstate][j])
 
-                # for j in range(0,accuracy):
-                #     if processes[prevstate][2] != 0:                             # We need to account for the fact that if the info is about T then it only works if isentropic!
-                #         newinfo = True
-                #         plotinfo[prevstate][j][0] = properties[i][0] * (plotinfo[prevstate][j][1]/properties[i][1])**((gamma - 1) / gamma)  # here we are storing the isentropic Tempreturues, however now we need to account for isentropic efficiency and store the real tempreratures
-                #         isenindex = 0                                                                                   # Setting a vairable to track which property has the isentropic assumption in order to remove it once the algorythm has calculated h
-                #         plotinfo[prevstate][j] = mgetH(plotinfo[prevstate][j],isenindex)                                        # We don't actually want to define the whole thing herre, what we need is an algorythm that will just get us h!
-                #         plotinfo[prevstate][j] = isenaccounterv2(plotinfo[prevstate][j],properties[i],prevstate,processes)
-                # current,prevprevstate = adjstates(prevstate)
-                # plotinfo[prevprevstate][accuracy-1] = plotinfo[prevstate][0]                                            # This alogrytm is really nice hiowever it really does not make any sense to use it in thw backwards fashion
-
-
-
-
-
             elif properties[prevstate][2] != 0 and processes[prevstate][2]==1 and definedstates[prevstate] == False:
                 newinfo = True
                 properties[prevstate][1] = properties[i][1] * (properties[i][2] / properties[prevstate][2]) ** (gamma)
 
                 properties[prevstate] = FullyDefinernew(isenproperties[prevstate])
-
+                definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
                 plotinfo[prevstate][accuracy - 1] = properties[i]
@@ -168,7 +189,25 @@ def checkaround(properties, processes,plotinfo, definedstates,newinfo, i):
                     plotinfo[prevstate][j] = FullyDefinernew(plotinfo[prevstate[j]])
 
 
-    return properties,plotinfo,newinfo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return properties,plotinfo,newinfo,definedstates
 
 
 
