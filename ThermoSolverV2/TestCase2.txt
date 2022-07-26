@@ -9,7 +9,9 @@ componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
 componenttype[3] = ["Cooler"]
 
-
+T[2]=3273
+T[0]=288
+P[0] = 1*10**5
 
 vratio[0] = 9
 

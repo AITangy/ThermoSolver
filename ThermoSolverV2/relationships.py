@@ -140,6 +140,16 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[nextstate][4] = properties[i][4] * ratios[i][0]
 
+        if processes[i][2] != 0:
+            if properties[i][1] != 0 and properties[nextstate][1] == 0:
+                print()
+            if properties[nextstate][1] == 0 and properties[i][1] == 0:
+                print()
+            if properties[i][2] != 0 and properties[nextstate][2] == 0:
+                print()
+            if properties[nextstate][2] == 0 and properties[i][2] == 0:
+                print()
+
     if ratios[i][1] != 0:
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
             newinfo = True
@@ -149,6 +159,20 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][nextstate] = properties[i][1] * ratios[i][1]
 
+        if processes[i][2] != 0:
+
+            if properties[i][0] != 0 and properties[nextstate][0] == 0:
+                print()
+            if properties[nextstate][0] == 0 and properties[i][0] == 0:
+                properties[nextstate][0] = properties[i][0] * processes[i][2] ** ((gamma - 1) / gamma)
+                properties[nextstate] = mgetH(properties[nextstate])
+                properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes)
+
+            if properties[i][2] != 0 and properties[nextstate][2] == 0:
+                print()
+            if properties[nextstate][2] == 0 and properties[i][2] == 0:
+                print()
+
     if ratios[i][2] != 0:
         if properties[nextstate][2] != 0 and properties[i][2] == 0:
             newinfo = True
@@ -157,6 +181,19 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
         elif properties[i][2] != 0 and properties[nextstate][2] == 0:
             newinfo = True
             properties[nextstate][2] = properties[i][2] * ratios[i][2]
+
+        if processes[i][2] != 0:
+            if properties[i][0] != 0 and properties[nextstate][0] == 0:
+                print()
+            if properties[nextstate][0] == 0 and properties[i][0] == 0:
+                print()
+            if properties[i][1] != 0 and properties[nextstate][1] == 0:
+                print()
+            if properties[nextstate][1] == 0 and properties[i][1] == 0:
+                print()
+
+
+
 
     return newinfo, properties,plotinfo
 
@@ -170,3 +207,6 @@ def relationshipintermediate(plotinfo,i):
             plotinfo[i][j] = FullyDefinernew(plotinfo[i][j])
 
     return plotinfo
+
+def ratiochecker(properties,processes,ratios,i):
+    nextstate,prevstate = statename.adjstates(i)

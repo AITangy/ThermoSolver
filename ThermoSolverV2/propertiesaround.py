@@ -96,37 +96,6 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
 
 
 
-            if ratios[i][0]!=0 and processes[i][2]!=0:
-                if properties[i][1]!=0 and properties[nextstate][1]==0:
-                    print()
-                if properties[nextstate][1]==0 and properties[i][1]==0:
-                    print()
-                if properties[i][2]!=0 and properties[nextstate][2]==0:
-                    print()
-                if properties[nextstate][2]==0 and properties[i][2]==0:
-                    print()
-
-
-            if ratios[i][1]!=0 and processes[i][2]!=0:
-                if properties[i][0] != 0 and properties[nextstate][0] == 0:
-                    print()
-                if properties[nextstate][0] == 0 and properties[i][0] == 0:
-                    print()
-                if properties[i][2] != 0 and properties[nextstate][2] == 0:
-                    print()
-                if properties[nextstate][2] == 0 and properties[i][2] == 0:
-                    print()
-
-            if ratios[i][2]!=0 and processes[i][2]!=0:
-                if properties[i][0] != 0 and properties[nextstate][0] == 0:
-                    print()
-                if properties[nextstate][0] == 0 and properties[i][0] == 0:
-                    print()
-                if properties[i][1] != 0 and properties[nextstate][1] == 0:
-                    print()
-                if properties[nextstate][1] == 0 and properties[i][1] == 0:
-                    print()
-
 
 
 

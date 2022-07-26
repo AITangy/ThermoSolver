@@ -1,13 +1,7 @@
 from initialise import *
 import constants
 
-M,R,Cp,Cv,gamma = constants.Air()
-
-#info.py passes known data into data structures
-g = 9.81
-for flows in range(0,numberofstates):
-    mflowrate[flows] = 50
-
+M,R,Cp,Cv,gamma = constants.Hydrogen()
 
 T[0] = 15+273
 
@@ -40,6 +34,19 @@ qtransfer[2]=0
 
 
 
+# defining known (state/property/ratio) information
+
+wtransfer[0] = 3000000
+# qtransfer[0] = 0
+
+
+
+
+
+# defining known (state/property/ratio) information
+
+wtransfer[0] = 3000000
+# qtransfer[0] = 0
 
 
 
