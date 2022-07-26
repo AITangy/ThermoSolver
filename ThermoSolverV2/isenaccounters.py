@@ -7,7 +7,7 @@ from definer import FullyDefinernew
 def isenaccounterv2(undefstate,defstate,startstate,processes):
 
 
-    if processes[startstate][5] == ["Compressor"] or processes[startstate][5] == ["Pump"] or processes[startstate][5] == ["Heater"]:
+    if processes[startstate][5] == ["Compressor"] or processes[startstate][5] == ["Pump"] or processes[startstate][5] == ["Heater"] or processes[startstate][5] == ["Combustor"]:
         undefstate[4] = (undefstate[4] - defstate[4]) / processes[startstate][2] + defstate[4]
 
 

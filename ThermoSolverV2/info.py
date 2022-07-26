@@ -5,34 +5,42 @@ M,R,Cp,Cv,gamma = constants.Air()
 
 #info.py passes known data into data structures
 g = 9.81
+for flows in range(0,numberofstates):
+    mflowrate[flows] = 50
 
-P[0] = 1*10**5
+
 T[0] = 15+273
-T[2] = 3000+273
 
 
-processtype[0] = ["Isentropic"]
-processtype[1] = ["Isochoric"]
-processtype[2] = ["Isentropic"]
-processtype[3] = ["Isochoric"]
+
+processtype[0] = [""]
+processtype[1] = ["Isobaric"]
+processtype[2] = [""]
+processtype[3] = ["Isobaric"]
+
 
 
 componenttype[0] = ["Compressor"]
-componenttype[1] = ["Heater"]
+componenttype[1] = ["Combustor"]
 componenttype[2] = ["Turbine"]
 componenttype[3] = ["Cooler"]
 
 
 
-vratio[0] = 9
+
+isenefficiency[0] = 0.8
+isenefficiency[2] = 0.85
+
+Pratio[0] = 10
+qtransfer[0] = 0
+
+qtransfer[1]=42*10**6
+wtransfer[1]=0
+qtransfer[2]=0
 
 
 
 
-# defining known (state/property/ratio) information
-
-wtransfer[0] = 3000000
-# qtransfer[0] = 0
 
 
 

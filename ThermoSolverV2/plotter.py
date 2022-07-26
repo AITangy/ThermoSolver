@@ -16,21 +16,18 @@ def plotaround(plotinfo,plotnumber):
 def plotPv(plotinfo,plotnumber):
     plot1 = figure(title="P v Diagram " + str(plotnumber+1), x_axis_label='v', y_axis_label='P')
     for i in range(0, numberofstates):
-        plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i), line_width=2,
-                   color=Category10[numberofstates][i])
+        plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i), line_width=2,color=Category10[numberofstates][i])
     show(plot1)
 
 def plotTs(plotinfo,plotnumber):
     plot2 = figure(title="T s Diagram " + str(plotnumber+1), x_axis_label='s', y_axis_label='T')
     for i in range(0, numberofstates):
-        plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i), line_width=2,
-                   color=Category10[numberofstates][i])
+        plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i), line_width=2,color=Category10[numberofstates][i])
     show(plot2)
 def ploths(plotinfo,plotnumber):
     plot3 = figure(title="h s Diagram " + str(plotnumber+1), x_axis_label='s', y_axis_label='h')
     for i in range(0, numberofstates):
-        plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i), line_width=2,
-                   color=Category10[numberofstates][i])
+        plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i), line_width=2,color=Category10[numberofstates][i])
     show(plot3)
 
     print()
