@@ -1,6 +1,6 @@
 import statename
 
-from info import M,R,Cp,Cv,gamma
+from info import M,R,Cp,Cv,gamma,g
 
 # If we have information on next h and previous h and are missing information on q or w but have one of them then we can calulate the other
 # Calulcating information on Qtransfer or Wtransfer
@@ -20,6 +20,10 @@ def calcqandw(properties,processes,i):
 
 
 def useqandw(properties,processes,i):
+    if properties[i][0]!=0:
+        properties[i][3] = Cv*properties[i][0]
+        properties[i][4] = Cp*properties[i][0]
+
     nextstate, prevstate = statename.adjstates(i)
     if processes[i][0]!="" and processes[i][1]!="":
         if properties[i][4]!=0 and properties[nextstate][4]==0:                                                 # Solving if we have knowledge on enthalpy of current state

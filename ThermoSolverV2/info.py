@@ -1,7 +1,7 @@
 from initialise import *
 import constants
 
-M,R,Cp,Cv,gamma = constants.Hydrogen()
+M,R,Cp,Cv,gamma = constants.Air()
 
 T[0] = 15+273
 
@@ -55,6 +55,7 @@ datT = 273.16
 datP = 1*10**5
 datv = R*datT/datP
 dats = 3796
+g = 9.81
 
 for states in range(0, numberofstates):
     if processtype[states] == ["Isentropic"]:  # passing 2d array info
