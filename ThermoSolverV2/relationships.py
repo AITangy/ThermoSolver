@@ -190,8 +190,8 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
             if properties[i][0] != 0 and properties[nextstate][0] == 0:
 
                 properties[nextstate][0] = properties[i][0] * processes[i][2] ** ((gamma - 1) / gamma)
-                properties[nextstate] = mgetH(properties[nextstate])
-                properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes)
+                # properties[nextstate] = mgetH(properties[nextstate])
+                # properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes) I would totally do this process of getting h and isenaccounting but of course in this case we can't really get h because the state aint even defined, so perhps get h needs to have some kind of checker to mkae sure the sate is defined before it works its magic
 
             if properties[nextstate][0] !=0  and properties[i][0] == 0:
                 print()
