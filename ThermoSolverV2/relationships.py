@@ -188,11 +188,13 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
         if processes[i][2] != 0:
 
             if properties[i][0] != 0 and properties[nextstate][0] == 0:
-                print()
-            if properties[nextstate][0] == 0 and properties[i][0] == 0:
+
                 properties[nextstate][0] = properties[i][0] * processes[i][2] ** ((gamma - 1) / gamma)
                 properties[nextstate] = mgetH(properties[nextstate])
                 properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes)
+
+            if properties[nextstate][0] !=0  and properties[i][0] == 0:
+                print()
 
             if properties[i][2] != 0 and properties[nextstate][2] == 0:
                 print()

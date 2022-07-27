@@ -123,12 +123,12 @@ def FullyDefinernew(modifproperties):   # We now need to tweak every instance of
 
 
 
-def mgetH(modifproperties,isenindex):
+def mgetH(modifproperties):
 
     dummyproperties = np.copy(modifproperties)
     dummyproperties = FullyDefinernew(dummyproperties)
     modifproperties[4] = dummyproperties[4]
-    modifproperties[isenindex] = 0
+    modifproperties[0] = 0
     return modifproperties
 
 

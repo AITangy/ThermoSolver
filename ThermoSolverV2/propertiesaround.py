@@ -45,7 +45,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
 
                 properties[nextstate][0] = properties[i][0] * (properties[nextstate][1]/properties[i][1])**((gamma-1)/gamma)
 
-                properties[nextstate] = mgetH(properties[nextstate],0)
+                properties[nextstate] = mgetH(properties[nextstate])
 
                 properties[nextstate] = isenaccounterv2(properties[nextstate],properties[i],i,processes)
                 definedstates[nextstate] = True
@@ -64,7 +64,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                     if processes[i][2] !=0:
 
                         plotinfo[i][j][0] = properties[i][0] * (plotinfo[i][j][1]/properties[i][1])**((gamma-1)/gamma)
-                        plotinfo[i][j] = mgetH(plotinfo[i][j],0)
+                        plotinfo[i][j] = mgetH(plotinfo[i][j])
                         plotinfo[i][j] = isenaccounterv2(plotinfo[i][j],properties[i],i,processes)
 
 
@@ -75,7 +75,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
 
                 properties[nextstate][0] = properties[i][0]*(properties[i][2]/properties[nextstate][2])**(gamma-1)
 
-                properties[nextstate] = mgetH(properties[nextstate], 0)
+                properties[nextstate] = mgetH(properties[nextstate])
 
                 properties[nextstate] = isenaccounterv2(properties[nextstate], properties[i], i, processes)
                 definedstates[nextstate] = True
@@ -91,7 +91,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                     if processes[i][2] != 0:
 
                         plotinfo[i][j][0] = properties[i][0]*(properties[i][2]/plotinfo[i][j][2])**(gamma-1)
-                        plotinfo[i][j] = mgetH(plotinfo[i][j], 0)
+                        plotinfo[i][j] = mgetH(plotinfo[i][j])
                         plotinfo[i][j] = isenaccounterv2(plotinfo[i][j], properties[i], i, processes)
 
 
