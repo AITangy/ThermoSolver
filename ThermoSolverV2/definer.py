@@ -27,7 +27,7 @@ def CheckDefine(i,properties,plotinfo,definedstates,newinfo):
             plotinfo[i][0] = properties[i]
             plotinfo[prevstate][accuracy - 1] = properties[i]
 
-        elif sum == 2 and (properties[i][1] + properties[i][2] + properties[i][3] + properties[i][5]) != 0 and (properties[i][1] + properties[i][2] + properties[i][3] + properties[i][5]) != 0 and (properties[i][0] + properties[i][1] + properties[i][2] + properties[i][5]) != 0:
+        elif sum == 2 and (properties[i][1] + properties[i][2]  +properties[i][4] + properties[i][5]) != 0 and (properties[i][1] + properties[i][2] + properties[i][3] + properties[i][5]) != 0 and ( properties[i][1] + properties[i][2] + properties[i][5]) != 0:
             newinfo = True
             definedstates[i] = True
             properties[i] = FullyDefinernew(properties[i])

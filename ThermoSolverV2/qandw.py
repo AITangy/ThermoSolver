@@ -14,7 +14,7 @@ def calcqandw(properties,processes,i):
             processes[i][0] = processes[i][1] + processes[nextstate][3]*(properties[nextstate][4] + 0.5 * (processes[nextstate][6])**2 + g * processes[nextstate][6]) - processes[i][3]*(properties[i][4] + 0.5 * (processes[i][6])**2 + g*processes[i][7])
 
         if processes[i][1] == "":
-            processes[i][1] = processes[i][0] -  (processes[nextstate][3]*(properties[nextstate][4] + 0.5 * (processes[nextstate][6])**2 + g * processes[nextstate][6]) - processes[i][3]*(properties[i][4] + 0.5 * (processes[i][6])**2 + g*processes[i][7]))
+            processes[i][1] = processes[i][0] - processes[nextstate][3]*(properties[nextstate][4] + 0.5*processes[nextstate][6]**2 + g*processes[nextstate][7]) + processes[i][3] * (properties[i][4] + 0.5*processes[i][6]**2 + g*processes[i][7])
     return properties,processes
 # Here we need to account for qtransfer and wtransfer if this information has been given                                *********NEW
 
