@@ -3,6 +3,11 @@ import constants
 
 M,R,Cp,Cv,gamma = constants.Air()
 
+for i in range(0,numberofstates):
+    mflowrate[i] = 50
+
+
+
 T[0] = 15+273
 
 
@@ -26,7 +31,7 @@ isenefficiency[0] = 0.8
 isenefficiency[2] = 0.85
 
 Pratio[0] = 10
-qtransfer[0] = 0
+
 
 qtransfer[1]=42*10**6
 wtransfer[1]=0
@@ -34,19 +39,16 @@ qtransfer[2]=0
 
 
 
-# defining known (state/property/ratio) information
-
-wtransfer[0] = 3000000
-# qtransfer[0] = 0
 
 
 
+qtransfer[0] = 0
 
 
-# defining known (state/property/ratio) information
 
-wtransfer[0] = 3000000
-# qtransfer[0] = 0
+
+
+
 
 
 

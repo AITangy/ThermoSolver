@@ -5,7 +5,7 @@ import numpy as np
 from statename import adjstates
 
 
-def CheckDefine(i,properties,plotinfo,definedstates):
+def CheckDefine(i,properties,plotinfo,definedstates,newinfo):
     sum = 0
 
     nextstate,prevstate = adjstates(i)
@@ -34,8 +34,28 @@ def CheckDefine(i,properties,plotinfo,definedstates):
             plotinfo[i][0] = properties[i]
             plotinfo[prevstate][accuracy - 1] = properties[i]
 
+    if properties[i][4]!=0 and properties[i][3]==0 and properties[i][0]==0:
+        newinfo = True
+        properties[i] = Tstuff(properties[i])
+    if properties[i][3]!=0 and properties[i][4]==0 and properties[i][0]==0:
+        newinfo = True
+        properties[i] = Tstuff(properties[i])
+    if properties[i][4]!=0 and properties[i][3]!=0 and properties[i][0]==0:
+        newinfo = True
+        properties[i] = Tstuff(properties[i])
+    if properties[i][0]!=0 and properties[i][3]==0 and properties[i][4]==0:
+        newinfo = True
+        properties[i] = Tstuff(properties[i])
+    if properties[i][0]!=0 and properties[i][4]!=0 and properties[i][0]==0:
+        newinfo = True
+        properties[i] = Tstuff(properties[i])
+    if properties[i][0]!=0 and properties[i][3]!=0 and properties[i][4]==0:
+        newinfo= True
+        properties[i] = Tstuff(properties[i])
 
-    return properties, plotinfo,definedstates
+
+
+    return properties,plotinfo,definedstates,newinfo
 
 
 
@@ -143,7 +163,21 @@ def defmessage(definedstates, properties):
         print("System was solved with the following properties:")
         print(properties)
 
+def Tstuff(modifproperties):
 
+    if modifproperties[0]!=0:
+        modifproperties[3] = Cv*modifproperties[0]
+        modifproperties[4] = Cp*modifproperties[0]
+
+    elif modifproperties[3]!=0:
+        modifproperties[0] = modifproperties[3]/Cv
+        modifproperties[4] = Cp*modifproperties[0]
+
+    elif modifproperties[4]!=0:
+        modifproperties[0] = modifproperties[4]/Cp
+        modifproperties[3] = Cv*modifproperties[0]
+
+    return modifproperties
 
 # def hGet(dummyproperties, counter):
 #     datT = 273.16
