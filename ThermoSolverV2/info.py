@@ -31,12 +31,13 @@ isenefficiency[0] = 0.8
 isenefficiency[2] = 0.85
 
 Pratio[0] = 10
+Pratio[2] = 1/10
 
 
 qtransfer[1]=42*10**6
 wtransfer[1]=0
 qtransfer[2]=0
-
+wtransfer[3]=0
 
 
 
