@@ -129,7 +129,7 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             for j in range(0,accuracy):
                 plotinfo[i][j][0] = properties[nextstate][0]
 
-    newinfo,properties = ratiochecker(properties,processes,ratios,i,newinfo)
+    newinfo,properties = ratiochecker(properties,processes,ratios,i,newinfo,plotinfo)
 
 
 
@@ -153,7 +153,17 @@ def relationshipintermediate(plotinfo,properties,i):
 
     return plotinfo
 
-def ratiochecker(properties,processes,ratios,i,newinfo):
+def ratiointermediate(plotinfo,properties,i,prop):
+
+    nextstate,prevstate = statename.adjstates(i)
+    if properties[i][prop]!=0 and properties[nextstate][prop]!=0:
+        intermediates = np.linspace(properties[i][prop], properties[nextstate][prop],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+        plotinfo[i][:, prop] = intermediates
+
+
+    return plotinfo
+
+def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
     nextstate,prevstate = statename.adjstates(i)
 
@@ -161,24 +171,31 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
         if properties[nextstate][4] != 0 and properties[i][4] == 0:
             newinfo = True
             properties[i][4] = properties[nextstate][4] / ratios[i][0]
+            # ratiointermediate(plotinfo, properties, i, 4)
+
 
         elif properties[i][4] != 0 and properties[nextstate][4] == 0:
             newinfo = True
             properties[nextstate][4] = properties[i][4] * ratios[i][0]
+            # ratiointermediate(plotinfo, properties, i, 4)
 
         if processes[i][2] != 0:
             if properties[i][1] != 0 and properties[nextstate][1] == 0:
                 properties[nextstate][1] = ((properties[i][1]**(gamma-1/gamma))*ratios[i][0])**(gamma/gamma-1)
                 properties[nextstate][1] = accountT(properties[nextstate][1],properties[nextstate][1],i,processes)
+                # ratiointermediate(plotinfo, properties, i, 1)
 
             if processes[i][2]==1:
 
                 if properties[nextstate][1] !=0 and properties[i][1] == 0:
                     properties[i][1] = (1/ratios[i][1])**(gamma-1/gamma)*properties[nextstate][0]
+                    # ratiointermediate(plotinfo, properties, i, 1)
                 if properties[i][2] != 0 and properties[nextstate][2] == 0:
                     properties[nextstate][2] = ((properties[nextstate][2]**(gamma-1))/ratios[i][0])**(1/(gamma-1))
+                    # ratiointermediate(plotinfo, properties, i, 2)
                 if properties[nextstate][2] == 0 and properties[i][2] == 0:
                     properties[nextstate] = (((properties[i][2]**(gamma-1)))/ratios[i][0])**(1/gamma-1)
+                    # ratiointermediate(plotinfo, properties, i, 2)
 
 
 
@@ -187,10 +204,12 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
             newinfo = True
             properties[i][1] = properties[nextstate][1] / ratios[i][1]
+            ratiointermediate(plotinfo, properties, i, 1)
 
         elif properties[i][1] != 0 and properties[nextstate][1] == 0:
             newinfo = True
             properties[i][nextstate] = properties[i][1] * ratios[i][1]
+            # ratiointermediate(plotinfo, properties, i, 1)
 
         if processes[i][2] != 0:
 
@@ -198,19 +217,23 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
                 newinfo = True
                 properties[nextstate][0] = properties[i][0] * ratios[i][1] ** ((gamma - 1) / gamma)
                 properties[nextstate] = accountT(properties[nextstate],properties[i],i,processes)
+                # ratiointermediate(plotinfo, properties, i, 0)
 
             if processes[i][2]==1:
                 if properties[nextstate][0] !=0  and properties[i][0] == 0 :
                     newinfo = True
                     properties[i][0] = properties[nextstate][0] / ratios[i][1] ** ((gamma - 1) / gamma)
+                    # ratiointermediate(plotinfo, properties, i, 0)
 
                 if properties[i][2] != 0 and properties[nextstate][2] == 0:
                     newinfo = True
                     properties[nextstate][2] = (properties[i][2]**gamma)/ratios[i][1]
+                    # ratiointermediate(plotinfo, properties, i, 2)
 
                 if properties[nextstate][2] != 0 and properties[i][2] == 0:
                     newinfo = True
                     properties[i][2]=(properties[nextstate][2]**gamma)*ratios[i][1]
+                    # ratiointermediate(plotinfo, properties, i, 2)
 
 
 
@@ -221,26 +244,30 @@ def ratiochecker(properties,processes,ratios,i,newinfo):
         if properties[nextstate][2] != 0 and properties[i][2] == 0:
             newinfo = True
             properties[i][2] = properties[nextstate][2] / ratios[i][2]
-
+            # ratiointermediate(plotinfo, properties, i, 2)
         elif properties[i][2] != 0 and properties[nextstate][2] == 0:
             newinfo = True
             properties[nextstate][2] = properties[i][2] * ratios[i][2]
-
+            # ratiointermediate(plotinfo, properties, i, 2)
         if processes[i][2] != 0:
 
             if properties[i][0] != 0 and properties[nextstate][0] == 0:
                 properties[nextstate][0] = properties[i][0]/ratios[i][2]**(gamma-1)
                 properties[nextstate] = accountT(properties[nextstate],properties[i],i,processes)
+                # ratiointermediate(plotinfo, properties, i, 0)
             if processes[i][2]==1:
 
                 if properties[nextstate][0] != 0 and properties[i][0] == 0:
                     properties[i][0] = properties[nextstate][0]/ratios[i][2]**(gamma-1)
+                    # ratiointermediate(plotinfo, properties, i, 0)
 
                 if properties[i][1] != 0 and properties[nextstate][1] == 0:
                     properties[nextstate][1] = properties[i][1]/ratios[i][2]**gamma
+                    # ratiointermediate(plotinfo, properties, i, 1)
 
 
                 if properties[nextstate][1] != 0 and properties[i][1] == 0:
                     properties[i][1] = properties[nextstate][1]*ratios[i][2]**gamma
+                    # ratiointermediate(plotinfo, properties, i, 1)
 
     return newinfo,properties
