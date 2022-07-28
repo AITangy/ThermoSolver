@@ -1,7 +1,3 @@
-for flows in range(0,numberofstates):
-    mflowrate[flows] = 50
-
-
 
 M,R,Cp,Cv,gamma = constants.Air()
 
@@ -11,7 +7,7 @@ for i in range(0,numberofstates):
 
 
 T[0] = 15+273
-
+P[1] = 10000
 
 
 processtype[0] = [""]
@@ -40,18 +36,3 @@ qtransfer[1]=42*10**6
 wtransfer[1]=0
 qtransfer[2]=0
 wtransfer[3]=0
-
-
-
-
-
-qtransfer[0] = 0
-
-
-
-
-
-
-
-
-
