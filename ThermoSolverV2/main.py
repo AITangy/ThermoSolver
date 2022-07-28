@@ -30,7 +30,9 @@ def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
 
 # We need to solve for information on properties around every defined state, and account for the intermediate information which should be plotted
             properties,plotinfo,newinfo,definedstates = checkaround(properties,processes,ratios,plotinfo, definedstates,newinfo, i)
+
     defmessage(definedstates,properties)
+
     plotaround(plotinfo,plotnumber,processes)
 
 

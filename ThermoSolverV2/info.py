@@ -9,7 +9,6 @@ for i in range(0,numberofstates):
 
 
 T[0] = 280
-P[1]=100
 T[2]=1200
 
 
