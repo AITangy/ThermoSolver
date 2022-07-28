@@ -7,7 +7,7 @@ for i in range(0,numberofstates):
 
 
 T[0] = 15+273
-P[1] = 10000
+P[1] = 10000            #We made this up for plotting purposes to act as a datum, this information is not actually present.
 
 
 processtype[0] = [""]

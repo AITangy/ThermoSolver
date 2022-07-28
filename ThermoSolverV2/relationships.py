@@ -18,13 +18,13 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][1] = properties[nextstate][1]
 
-            for j in range(0,accuracy):
-                plotinfo[i][j][1] = properties[nextstate][1]
+
 
         elif properties[i][1] != 0 and properties[nextstate][1] == 0:
             newinfo = True
             properties[nextstate][1] = properties[i][1]
 
+        if properties[i][1]!=0 and properties[nextstate][1]!=0:
             for j in range(0,accuracy):
                 plotinfo[i][j][1] = properties[nextstate][1]
 
@@ -43,16 +43,15 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][2] = properties[nextstate][2]
 
-            for j in range(0,accuracy):
-                plotinfo[i][j][2] = properties[nextstate][2]
+
 
         elif properties[i][2] != 0 and properties[nextstate][2] == 0:
             newinfo = True
             properties[nextstate][2] = properties[i][2]
 
+        if properties[i][2]!=0 and properties[nextstate][2]!=0:
             for j in range(0,accuracy):
                 plotinfo[i][j][2] = properties[nextstate][2]
-
 
 
 
@@ -65,13 +64,13 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][3] = properties[nextstate][3]
 
-            for j in range(0,accuracy):
-                plotinfo[i][j][3] = properties[nextstate][3]
+
 
         elif properties[i][3] != 0 and properties[nextstate][3] == 0:
             newinfo = True
             properties[nextstate][3] = properties[i][3]
 
+        if properties[i][3]!=0 and properties[nextstate][3]!=0:
             for j in range(0,accuracy):
                 plotinfo[i][j][3] = properties[nextstate][3]
 
@@ -92,13 +91,13 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][4] = properties[nextstate][4]
 
-            for j in range(0,accuracy):
-                plotinfo[i][j][4] = properties[nextstate][4]
+
 
         elif properties[i][4] != 0 and properties[nextstate][4] == 0:
             newinfo = True
             properties[nextstate][4] = properties[i][4]
 
+        if properties[i][4]!=0 and properties[nextstate][4]!=0:
             for j in range(0,accuracy):
                 plotinfo[i][j][4] = properties[nextstate][4]
 
@@ -119,13 +118,13 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
             newinfo = True
             properties[i][0] = properties[nextstate][0]
 
-            for j in range(0,accuracy):
-                plotinfo[i][j][0] = properties[nextstate][0]
+
 
         elif properties[i][0] != 0 and properties[nextstate][0] == 0:
             newinfo = True
             properties[nextstate][0] = properties[i][0]
 
+        if properties[i][0]!=0 and properties[nextstate][0]!=0:
             for j in range(0,accuracy):
                 plotinfo[i][j][0] = properties[nextstate][0]
 
@@ -211,7 +210,7 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 #                                                                                                                       THIS IS THE ONE TO KEEP
         elif properties[i][1] != 0 and properties[nextstate][1] == 0:
             newinfo = True
-            properties[i][nextstate] = properties[i][1] * ratios[i][1]
+            properties[nextstate][1] = properties[i][1] * ratios[i][1]
             ratiointermediate(plotinfo, properties, i, 1)
 
         if processes[i][2] != 0:
