@@ -1,12 +1,13 @@
-M,R,Cp,Cv,gamma = constants.Air()
+M,R,Cp,Cv,gamma = constants.Helium()
 
 for i in range(0,numberofstates):
     mflowrate[i] = 50
 
 
 
-T[0] = 15+273
-P[0] = 10000            #We made this up for plotting purposes to act as a datum, this information is not actually present.
+T[0] = 280
+P[0]=100
+T[2]=1200
 
 
 processtype[0] = [""]
@@ -17,24 +18,21 @@ processtype[3] = ["Isobaric"]
 
 
 componenttype[0] = ["Compressor"]
-componenttype[1] = ["Combustor"]
+componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
 componenttype[3] = ["Cooler"]
 
 
 
 
-isenefficiency[0] = 0.8
-isenefficiency[2] = 0.85
+isenefficiency[0] = 0.85
+isenefficiency[2] = 0.9
 
-Pratio[0] = 10
-Pratio[2] = 1/10
+Pratio[0] = 5
+Pratio[2] = 1/5
 
 
-qtransfer[1]=42*10**6
+qtransfer[0]=0
 wtransfer[1]=0
 qtransfer[2]=0
 wtransfer[3]=0
-
-
-
