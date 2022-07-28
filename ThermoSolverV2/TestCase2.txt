@@ -1,3 +1,4 @@
+M,R,Cp,Cv,gamma = constants.Air()
 processtype[0] = ["Isentropic"]
 processtype[1] = ["Isochoric"]
 processtype[2] = ["Isentropic"]

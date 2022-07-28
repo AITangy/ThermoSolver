@@ -1,3 +1,4 @@
+M,R,Cp,Cv,gamma = constants.Hydrogen()
 g = 9.81
 T[0]=300
 P[0] = 1000000
