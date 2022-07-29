@@ -8,9 +8,7 @@ from info import M,R,Cp,Cv,gamma,g
 
 def calcqandw(properties,processes,i):
     nextstate,prevstate = statename.adjstates(i)
-    print(properties[i][4] !=0 and properties[nextstate][4]!=0)
-    print(processes[i][0]!="" or processes[i][1]!="")
-    print(processes[i][0]!="" and  processes[i][1]!= "")
+
     if properties[i][4] !=0 and properties[nextstate][4]!=0 and (processes[i][0]!="" or processes[i][1]!="") and not (processes[i][0]!="" and  processes[i][1]!= ""):
         if processes[i][0] == "":
             processes[i][0] = processes[i][1] + processes[nextstate][3]*(properties[nextstate][4] + 0.5 * (processes[nextstate][6])**2 + g * processes[nextstate][6]) - processes[i][3]*(properties[i][4] + 0.5 * (processes[i][6])**2 + g*processes[i][7])

@@ -10,7 +10,6 @@ from info import accuracy,M,R,Cp,Cv,gamma
 
 def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i):
     nextstate,prevstate = adjstates(i)
-    isenproperties = np.copy(properties)
 
     if definedstates[i] == True:
         if definedstates[nextstate] == False:                                                                   # Checking if future state is defined or not and if not trying to use the information it has along with the adjacent fully defined state to define it.
@@ -21,7 +20,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                 newinfo = True
                 properties[nextstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)))/properties[nextstate][0])
                                                                                                                 # We want to fully define the isentropic matrix to allow us to use its values if it turns out to be good, this could also aid in drawing graphs where we could use the isentropic case to show how isentropic efficencies are affecting the graph, sicne the isentropic stuff updates each tijme perhaps we need a "saved" one which keeps the isentropic function rather than updating with the main so we can seperate what was calculated isentropically and graph it distinctly
-                properties[nextstate] = FullyDefinernew(isenproperties[nextstate])
+                properties[nextstate] = FullyDefinernew(properties[nextstate])
                 definedstates[nextstate]=True
                 plotinfo[i][0] = properties[i]
                 plotinfo[nextstate][0] = properties[nextstate]
@@ -105,8 +104,8 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
             if properties[prevstate][0] != 0 and processes[prevstate][2] == 1 and definedstates[prevstate] == False:
                 newinfo = True
 
-                properties[prevstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)) )/properties[prevstate][0])
-                properties[prevstate] = FullyDefinernew(isenproperties[prevstate])
+                properties[prevstate][1] = ((properties[prevstate][0]/properties[prevstate][0])*properties[i][1]**((gamma-1)/gamma))**(gamma/(gamma-1))
+                properties[prevstate] = FullyDefinernew(properties[prevstate])
                 definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
@@ -144,7 +143,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                 newinfo = True
                 properties[prevstate][1] = properties[i][1] * (properties[i][2] / properties[prevstate][2]) ** (gamma)
 
-                properties[prevstate] = FullyDefinernew(isenproperties[prevstate])
+                properties[prevstate] = FullyDefinernew(properties[prevstate])
                 definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
                 plotinfo[prevstate][0] = properties[prevstate]
