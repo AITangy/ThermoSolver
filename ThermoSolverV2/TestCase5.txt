@@ -1,0 +1,43 @@
+M,R,Cp,Cv,gamma = constants.Air()
+
+for i in range(0,numberofstates):
+    mflowrate[i] = 50
+
+P[0] = 1*10**5
+T[0] = 20 + 273
+P[1] = 10*10**5
+T[1] = 344+273
+P[4] = 1*10**5
+T[2] = 1100
+
+
+processtype[0] = [""]
+processtype[1] = ["Isobaric"]
+processtype[2] = [""]
+processtype[3] = ["Isentropic"]
+processtype[4]= ["Isobaric"]
+
+
+componenttype[0] = ["Compressor"]
+componenttype[1] = ["Combustor"]
+componenttype[2] = ["Turbine"]
+componenttype[3] = ["Compressor"]
+componenttype[4] = ["Cooler"]
+
+
+
+
+isenefficiency[2] =0.9
+# isenefficiency[2] =
+#
+#
+Pratio[0] =10
+# Pratio[2] =
+
+
+qtransfer[0]=0
+wtransfer[1]=0
+qtransfer[2]=0
+wtransfer[3]=0
+qtransfer[3]=0
+wtransfer[4]=0

@@ -4,7 +4,7 @@ from relationships import CheckRelation
 from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths
 from propertiesaround import checkaround
-from info import properties, processes,ratios,  definedstates, plotinfo,  numberofstates
+from info import properties, processes,ratios,  definedstates, plotinfo,  numberofstates,maintainrelationships
 
 
 def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
@@ -17,8 +17,9 @@ def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
         passes = passes + 1                                                                                             # This is for debugging / optimisation purposes to see how many times it is needed to loop through the states to solve all the variables.
         newinfo = False
         for i in range(0, numberofstates):                                                                              # Looping through each state.
+
                                                                                                                         # Initiallising a sum of the number of information in each state
-                                                                                                                        # Looping through each property within a state.
+            properties,processes,ratios = maintainrelationships(properties,processes,ratios)                                                                                                            # Looping through each property within a state.
             if definedstates[i]==False:
                 properties,plotinfo,definedstates,newinfo = CheckDefine(i,properties,plotinfo,definedstates,newinfo)
             newinfo,properties,plotinfo = CheckRelation(i,newinfo, properties,processes,ratios,plotinfo)

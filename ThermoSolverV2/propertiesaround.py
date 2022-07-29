@@ -117,7 +117,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                 for j in range(0,accuracy):
                     newinfo = True
                     plotinfo[prevstate][j][1] = (1 / (gamma - 1)) * math.log((properties[i][0] * (properties[i][2] ** (gamma - 1))) / plotinfo[prevstate][j][0])
-                    plotinfo[prevstate][j] = FullyDefinernew(plotinfo[prevstate[j]])
+                    plotinfo[prevstate][j] = FullyDefinernew(plotinfo[prevstate][j])
 
 
 
