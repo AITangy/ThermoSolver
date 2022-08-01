@@ -47,6 +47,11 @@ wtransfer[3]=0
 
 
 
+
+
+
+
+
 datT = 273.16
 datP = 1*10**5
 datv = R*datT/datP
@@ -61,3 +66,8 @@ for states in range(0, numberofstates):
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
 
+def maintainrelationships(properties,processes,ratios):
+
+
+
+    return properties,processes,ratios

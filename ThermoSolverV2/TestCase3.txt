@@ -70,4 +70,4 @@ def maintainrelationships(properties,processes,ratios):
 
 
 
-    return properties,processes,ratioss
+    return properties,processes,ratios

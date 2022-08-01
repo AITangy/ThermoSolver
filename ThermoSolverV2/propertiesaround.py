@@ -18,7 +18,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
                 # We can only use T to fully define the system when it is isentropic, otherwise the other property we can calculate must be enthalpy, and enthalpy and temprerature alone is not enough to define the perfect gas state.
 
                 newinfo = True
-                properties[nextstate][1] = (1/(gamma-1)) * math.log((properties[i][0]* (properties[i][2]**(gamma-1)))/properties[nextstate][0])
+                properties[nextstate][1] = ((properties[nextstate][0]/properties[i][0])*properties[i][1]**((gamma-1)/gamma))**(gamma/(gamma-1))
                                                                                                                 # We want to fully define the isentropic matrix to allow us to use its values if it turns out to be good, this could also aid in drawing graphs where we could use the isentropic case to show how isentropic efficencies are affecting the graph, sicne the isentropic stuff updates each tijme perhaps we need a "saved" one which keeps the isentropic function rather than updating with the main so we can seperate what was calculated isentropically and graph it distinctly
                 properties[nextstate] = FullyDefinernew(properties[nextstate])
                 definedstates[nextstate]=True
