@@ -8,8 +8,11 @@ from info import M,R,Cp,Cv,gamma,g
 
 def calcqandw(properties,processes,i):
     nextstate,prevstate = statename.adjstates(i)
+    sufficientinfo = False
+    if processes[i][3]!="" and processes[i][6]!="" and processes[i][7]!="" and processes[nextstate][3]!="" and processes[nextstate][6]!="" and processes[nextstate][7]!="":
+        sufficientinfo = True
 
-    if properties[i][4] !=0 and properties[nextstate][4]!=0 and (processes[i][0]!="" or processes[i][1]!="") and not (processes[i][0]!="" and  processes[i][1]!= ""):
+    if properties[i][4] !=0 and properties[nextstate][4]!=0 and (processes[i][0]!="" or processes[i][1]!="") and not (processes[i][0]!="" and  processes[i][1]!= "") and sufficientinfo==True:
         if processes[i][0] == "":
             processes[i][0] = processes[i][1] + processes[nextstate][3]*(properties[nextstate][4] + 0.5 * (processes[nextstate][6])**2 + g * processes[nextstate][6]) - processes[i][3]*(properties[i][4] + 0.5 * (processes[i][6])**2 + g*processes[i][7])
 

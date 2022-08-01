@@ -19,7 +19,7 @@ processtype[0] = [""]
 processtype[1] = ["Isobaric"]
 processtype[2] = [""]
 processtype[3] = ["Isentropic"]
-processtype[4]= ["Isobaric"]
+processtype[4]= [""]
 
 
 componenttype[0] = ["Compressor"]
@@ -69,11 +69,11 @@ for states in range(0, numberofstates):
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
 
 
-# for states in range(0,numberofstates):
-#     nextstate,prevstate = statename.adjstates(states)
-#     for j in range(0,6):
-#         if properties[states][j]!=0 and properties[nextstate][j]!=0:
-#             ratios[states][j] = properties[nextstate][j]/properties[states][j]
+for states in range(0,numberofstates):
+    nextstate,prevstate = statename.adjstates(states)
+    for j in range(0,6):
+        if properties[states][j]!=0 and properties[nextstate][j]!=0:
+            ratios[states][j] = properties[nextstate][j]/properties[states][j]
 
 
 def maintainrelationships(properties,processes,ratios):

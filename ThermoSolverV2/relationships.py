@@ -11,7 +11,7 @@ def CheckRelation(i, newinfo, properties,processes,ratios,plotinfo):
     # Here we go through and try to find new information by accounting for the process type of each of the components
 
     nextstate,prevstate = statename.adjstates(i)
-    plotinfo = relationshipintermediate(plotinfo,properties,i)
+
     if processes[i][4] == ["Isobaric"]:  # For strings the values stores inside must be refered to in square brackets for conditional statements however this is not true for integers.
         plotinfo = relationshipintermediate(plotinfo,properties, i)
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
@@ -156,11 +156,16 @@ def ratiointermediate(plotinfo,properties,i,prop):
 
     nextstate,prevstate = statename.adjstates(i)
     if properties[i][prop]!=0 and properties[nextstate][prop]!=0:
-        intermediates = np.linspace(properties[i][prop], properties[nextstate][prop],num=accuracy)  # here we solve for P becuause this is the data that was already there, the rest of the data will be solved off this.
+        intermediates = np.linspace(properties[i][prop], properties[nextstate][prop],num=accuracy)
         plotinfo[i][:, prop] = intermediates
 
 
+
     return plotinfo
+
+def definerow(plotinfo,i):
+    for j in range(0,accuracy):
+        plotinfo[i][j] = FullyDefinernew(plotinfo[i][j])
 
 def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
@@ -168,6 +173,9 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
     if ratios[i][0] != 0:
 
+        if properties[nextstate][0] != 0 and properties[i][0] != 0:
+            ratiointermediate(plotinfo, properties, i, 0)
+            definerow(plotinfo,i)
 
         if properties[nextstate][0] != 0 and properties[i][0] == 0:
             newinfo = True
@@ -188,6 +196,7 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
             if processes[i][2]==1:
 
+
                 if properties[nextstate][1] !=0 and properties[i][1] == 0:
                     properties[i][1] = (1/ratios[i][1])**(gamma-1/gamma)*properties[nextstate][0]
 
@@ -204,6 +213,9 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
 
     if ratios[i][1] != 0:
+
+        if properties[nextstate][1] != 0 and properties[i][1] != 0:
+            ratiointermediate(plotinfo, properties, i, 1)
 
         if properties[nextstate][1] != 0 and properties[i][1] == 0:
             newinfo = True
@@ -244,6 +256,10 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
 
 
     if ratios[i][2] != 0:
+
+        if properties[nextstate][2] != 0 and properties[i][2] != 0:
+            ratiointermediate(plotinfo, properties, i, 2)
+
 
         if properties[nextstate][2] != 0 and properties[i][2] == 0:
             newinfo = True

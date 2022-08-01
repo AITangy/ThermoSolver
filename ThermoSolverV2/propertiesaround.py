@@ -104,7 +104,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
             if properties[prevstate][0] != 0 and processes[prevstate][2] == 1 and definedstates[prevstate] == False:
                 newinfo = True
 
-                properties[prevstate][1] = ((properties[prevstate][0]/properties[prevstate][0])*properties[i][1]**((gamma-1)/gamma))**(gamma/(gamma-1))
+                properties[prevstate][1] = ((properties[prevstate][0]/properties[i][0])*properties[i][1]**((gamma-1)/gamma))**(gamma/(gamma-1))
                 properties[prevstate] = FullyDefinernew(properties[prevstate])
                 definedstates[prevstate] = True
                 plotinfo[i][0] = properties[i]
@@ -115,7 +115,7 @@ def checkaround(properties, processes,ratios,plotinfo, definedstates,newinfo, i)
 
                 for j in range(0,accuracy):
                     newinfo = True
-                    plotinfo[prevstate][j][1] = (1 / (gamma - 1)) * math.log((properties[i][0] * (properties[i][2] ** (gamma - 1))) / plotinfo[prevstate][j][0])
+                    plotinfo[prevstate][j][1] = ((plotinfo[prevstate][j][0]/properties[i][0])*properties[i][1]**((gamma-1)/gamma))**(gamma/(gamma-1))
                     plotinfo[prevstate][j] = FullyDefinernew(plotinfo[prevstate][j])
 
 

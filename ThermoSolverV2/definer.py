@@ -67,7 +67,7 @@ def CheckDefine(i,properties,plotinfo,definedstates,newinfo):
 def FullyDefinernew(modifproperties):   # We now need to tweak every instance of using the fully definer alogrythm to include the fact that we have the counter built in...                                                                                                                  # for entropy we will use datum values at the triple point of water and 1 bar
 
     if modifproperties[0] != 0 and modifproperties[1]!= 0:                                            # Solving given T and P
-        modifproperties[2] = R * modifproperties[0] / modifproperties[1]
+        modifproperties[2] = (R * modifproperties[0] )/ modifproperties[1]
         modifproperties[3] = Cv * modifproperties[0]
         modifproperties[4] = Cp * modifproperties[0]
         modifproperties[5] = Cp * math.log(modifproperties[0] / datT) - R * math.log(modifproperties[1] / datP) + dats
