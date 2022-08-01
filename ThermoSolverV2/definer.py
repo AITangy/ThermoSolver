@@ -3,6 +3,7 @@ import math
 from info import definedstates, numberofstates,accuracy,datT,datP,datv,dats,M,R,Cp,Cv,gamma
 import numpy as np
 from statename import adjstates
+from plotter import plotaround, plotaroundundefined
 
 
 def CheckDefine(i,properties,plotinfo,definedstates,newinfo):
@@ -152,16 +153,18 @@ def mgetH(modifproperties):
     return modifproperties
 
 
-def defmessage(definedstates, properties):
+def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
     found = True
     for i in range(0, numberofstates):
         if definedstates[i] == False:
             found = False
     if found == False:
         print("Enough information was not provided to solve the system")
+        plotaroundundefined(plotinfo,plotnumber,processes)
     else:
         print("System was solved with the following properties:")
         print(properties)
+        plotaround(plotinfo,plotnumber,processes)
 
 def Tstuff(modifproperties):
 

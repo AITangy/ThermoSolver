@@ -36,9 +36,36 @@ def ploths(plotinfo,plotnumber,processes):
     plot3.add_layout(plot3.legend[0], 'right')
     show(plot3)
 
-    print()
+def plotaroundundefined(plotinfo,plotnumber,processes):
+    plotPvundefined(plotinfo,plotnumber,processes)
+    plothsundefined(plotinfo,plotnumber,processes)
+    plotTsundefined(plotinfo,plotnumber,processes)
 
 
+
+
+
+def plotPvundefined(plotinfo, plotnumber, processes):
+    plot1 = figure(title="P v Diagram " + str(plotnumber + 1), x_axis_label='v', y_axis_label='P')
+    for i in range(0, numberofstates):
+        plot1.scatter(plotinfo[i][:, 2], plotinfo[i][:, 1],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
+    plot1.add_layout(plot1.legend[0], 'right')
+    show(plot1)
+
+def plotTsundefined(plotinfo, plotnumber, processes):
+    plot2 = figure(title="T s Diagram " + str(plotnumber + 1), x_axis_label='s', y_axis_label='T')
+    for i in range(0, numberofstates):
+        plot2.scatter(plotinfo[i][:, 5], plotinfo[i][:, 0],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
+
+    plot2.add_layout(plot2.legend[0], 'right')
+    show(plot2)
+
+def plothsundefined(plotinfo, plotnumber, processes):
+    plot3 = figure(title="h s Diagram " + str(plotnumber + 1), x_axis_label='s', y_axis_label='h')
+    for i in range(0, numberofstates):
+        plot3.scatter(plotinfo[i][:, 5], plotinfo[i][:, 4],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
+    plot3.add_layout(plot3.legend[0], 'right')
+    show(plot3)
 
 
 
