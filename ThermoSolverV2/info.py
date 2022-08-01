@@ -8,7 +8,7 @@ for i in range(0,numberofstates):
 
 P[0] = 1*10**5
 T[0] = 20 + 273
-P[1] = 10*10**5
+
 T[1] = 344+273
 P[4] = 1*10**5
 T[2] = 1100
@@ -31,11 +31,7 @@ componenttype[4] = ["Cooler"]
 
 
 isenefficiency[2] =0.9
-# isenefficiency[2] =
-#
-#
-Pratio[0] =10
-# Pratio[2] =
+
 
 
 qtransfer[0]=0
@@ -49,7 +45,7 @@ wtransfer[4]=0
 
 c[4]=""
 
-
+Pratio[0]=10
 
 
 datT = 273.16
