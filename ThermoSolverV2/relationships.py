@@ -167,16 +167,18 @@ def ratiochecker(properties,processes,ratios,i,newinfo,plotinfo):
     nextstate,prevstate = statename.adjstates(i)
 
     if ratios[i][0] != 0:
-        if properties[nextstate][4] != 0 and properties[i][4] == 0:
-            newinfo = True
-            properties[i][4] = properties[nextstate][4] / ratios[i][0]
-            ratiointermediate(plotinfo, properties, i, 4)
 
 
-        elif properties[i][4] != 0 and properties[nextstate][4] == 0:
+        if properties[nextstate][0] != 0 and properties[i][0] == 0:
             newinfo = True
-            properties[nextstate][4] = properties[i][4] * ratios[i][0]
-            ratiointermediate(plotinfo, properties, i, 4)
+            properties[i][0] = properties[nextstate][0] / ratios[i][0]
+            ratiointermediate(plotinfo, properties, i, 0)
+
+
+        elif properties[i][0] != 0 and properties[nextstate][0] == 0:
+            newinfo = True
+            properties[nextstate][0] = properties[i][0] * ratios[i][0]
+            ratiointermediate(plotinfo, properties, i, 0)
 
         if processes[i][2] != 0:
             if properties[i][1] != 0 and properties[nextstate][1] == 0:

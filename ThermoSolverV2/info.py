@@ -1,5 +1,6 @@
 from initialise import *
 import constants
+import statename
 
 M,R,Cp,Cv,gamma = constants.Air()
 
@@ -7,8 +8,8 @@ for i in range(0,numberofstates):
     mflowrate[i] = 1
 
 P[0] = 1*10**5
+P[1] = 10*10**5
 T[0] = 20 + 273
-
 T[1] = 344+273
 P[4] = 1*10**5
 T[2] = 1100
@@ -45,7 +46,7 @@ wtransfer[4]=0
 
 c[4]=""
 
-Pratio[0]=10
+
 
 
 datT = 273.16
@@ -55,12 +56,25 @@ dats = 3796
 g = 9.81
 
 for states in range(0, numberofstates):
+
+
     if processtype[states] == ["Isentropic"]:  # passing 2d array info
         isenefficiency[states] = 1
+
+
+
 
     properties[states] = [T[states], P[states], v[states], u[states], h[states], s[states]]
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
+
+
+# for states in range(0,numberofstates):
+#     nextstate,prevstate = statename.adjstates(states)
+#     for j in range(0,6):
+#         if properties[states][j]!=0 and properties[nextstate][j]!=0:
+#             ratios[states][j] = properties[nextstate][j]/properties[states][j]
+
 
 def maintainrelationships(properties,processes,ratios):
     if processes[0][1]!="":
@@ -68,3 +82,5 @@ def maintainrelationships(properties,processes,ratios):
 
 
     return properties,processes,ratios
+
+
