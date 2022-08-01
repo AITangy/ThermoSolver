@@ -1,49 +1,44 @@
 from initialise import *
 import constants
 
+
 M,R,Cp,Cv,gamma = constants.Air()
 
 for i in range(0,numberofstates):
-    mflowrate[i] = 1
+    mflowrate[i] = 50
 
-P[0] = 1*10**5
-T[0] = 20 + 273
-P[1] = 10*10**5
-T[1] = 344+273
-P[4] = 1*10**5
-T[2] = 1100
+
+
+T[0] = 15+273
+P[0] = 10000            #We made this up for plotting purposes to act as a datum, this information is not actually present.
 
 
 processtype[0] = [""]
 processtype[1] = ["Isobaric"]
 processtype[2] = [""]
-processtype[3] = ["Isentropic"]
-processtype[4]= ["Isobaric"]
+processtype[3] = ["Isobaric"]
+
 
 
 componenttype[0] = ["Compressor"]
 componenttype[1] = ["Combustor"]
 componenttype[2] = ["Turbine"]
-componenttype[3] = ["Compressor"]
-componenttype[4] = ["Cooler"]
+componenttype[3] = ["Cooler"]
 
 
 
 
-isenefficiency[2] =0.9
-# isenefficiency[2] =
-#
-#
-Pratio[0] =10
-# Pratio[2] =
+isenefficiency[0] = 0.8
+isenefficiency[2] = 0.85
+
+Pratio[0] = 10
+Pratio[2] = 1/10
 
 
-qtransfer[0]=0
+qtransfer[1]=42*10**6
 wtransfer[1]=0
 qtransfer[2]=0
 wtransfer[3]=0
-qtransfer[3]=0
-wtransfer[4]=0
 
 
 
@@ -66,9 +61,3 @@ for states in range(0, numberofstates):
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
 
-def maintainrelationships(properties,processes,ratios):
-    if processes[0][1]!="":
-        processes[2][1] = -1*processes[0][1]
-
-
-    return properties,processes,ratios

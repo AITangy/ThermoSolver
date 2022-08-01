@@ -63,3 +63,9 @@ for states in range(0, numberofstates):
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
 
+
+def maintainrelationships(properties,processes,ratios):
+
+
+
+    return properties,processes,ratios
