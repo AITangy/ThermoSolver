@@ -1,8 +1,8 @@
 
-from definer import  CheckDefine, defmessage
+from definer import  CheckDefine
 from relationships import CheckRelation
 from qandw import calcqandw, useqandw
-from plotter import plotaround, plotPv,plotTs,ploths
+from plotter import plotaround, plotPv,plotTs,ploths,defmessage
 from propertiesaround import checkaround
 from info import properties, processes,ratios,  definedstates, plotinfo,  numberofstates,maintainrelationships
 

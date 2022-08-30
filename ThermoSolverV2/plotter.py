@@ -1,71 +1,118 @@
 from bokeh.models import Arrow, NormalHead
 from bokeh.palettes import Category10
 from bokeh.plotting import figure, show
+from bokeh.layouts import row,widgetbox,layout
+from bokeh.models import ColumnDataSource
+from bokeh.models.widgets import DataTable, DateFormatter, TableColumn
 from info import numberofstates
 from info import accuracy
 def plotaround(plotinfo,plotnumber,processes):
-    plotPv(plotinfo,plotnumber,processes)
-    ploths(plotinfo,plotnumber,processes)
-    plotTs(plotinfo,plotnumber,processes)
-
+    plot1 = plotPv(plotinfo,plotnumber,processes)
+    plot2 = ploths(plotinfo,plotnumber,processes)
+    plot3 = plotTs(plotinfo,plotnumber,processes)
+    return plot1,plot2,plot3
 
 
 
 #    show(plot3)
 
 def plotPv(plotinfo,plotnumber,processes):
-    plot1 = figure(title="P v Diagram " + str(plotnumber+1), x_axis_label='v', y_axis_label='P')
+    plot1 = figure(title="P v Diagram " + str(plotnumber+1), x_axis_label='v(m^3/kg)', y_axis_label='P(Pa)')
     for i in range(0, numberofstates):
         plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot1.add_layout(plot1.legend[0], 'right')
-    show(plot1)
+    return plot1
 
 def plotTs(plotinfo,plotnumber,processes):
-    plot2 = figure(title="T s Diagram " + str(plotnumber+1), x_axis_label='s', y_axis_label='T')
+    plot2 = figure(title="T s Diagram " + str(plotnumber+1), x_axis_label='s(J/(Kg*K)', y_axis_label='T(K)')
     for i in range(0, numberofstates):
         plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot2.add_layout(plot2.legend[0], 'right')
-    show(plot2)
+    return plot2
 def ploths(plotinfo,plotnumber,processes):
-    plot3 = figure(title="h s Diagram " + str(plotnumber+1), x_axis_label='s', y_axis_label='h')
+    plot3 = figure(title="h s Diagram " + str(plotnumber+1), x_axis_label='s(J/(Kg*K)', y_axis_label='T(K)')
     for i in range(0, numberofstates):
         plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot3.add_layout(plot3.legend[0], 'right')
-    show(plot3)
+    return plot3
 
 def plotaroundundefined(plotinfo,plotnumber,processes):
-    plotPvundefined(plotinfo,plotnumber,processes)
-    plothsundefined(plotinfo,plotnumber,processes)
-    plotTsundefined(plotinfo,plotnumber,processes)
+
+    plot1 =plotPvundefined(plotinfo,plotnumber,processes)
+    plot2 = plothsundefined(plotinfo,plotnumber,processes)
+    plot3 = plotTsundefined(plotinfo,plotnumber,processes)
+    return plot1,plot2,plot3
+
+def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
+    found = True
 
 
+    # Temperatures = {i : properties[i,0] for i in range(0,numberofstates)}
+    # Pressures = {i: properties[i, 1] for i in range(0, numberofstates)}
+    # Volumes = {i: properties[i, 2] for i in range(0, numberofstates)}
+    # InternalEnergies ={i: properties[i, 3] for i in range(0, numberofstates)}
+    # Enthalipes = {i: properties[i, 4] for i in range(0, numberofstates)}
+    # Entropies = {i: properties[i, 5] for i in range(0, numberofstates)}
+    #
+    columns = [
+        TableColumn(field="Temperatures", title="T(K)"),
+        TableColumn(field="Pressures", title="Pressure(Pa)"),
+        TableColumn(field="Volumes",title="v(m^3/kg)"),
+        TableColumn(field = "InternalEnergies", title= "u(J/kg)"),
+        TableColumn(field = "Enthalpies", title= "h(J/kg)"),
+        TableColumn(field = "Entropies", title="s(J/(kg*K)")
+    ]
+    data = {'Temperatures': properties[:,0],
+            'Pressures': properties[:,1],
+            'Volumes':properties[:,2],
+            'InternalEnergies':properties[:,3],
+            'Enthalpies':properties[:,4],
+            'Entropies':properties[:,5]}
+
+    source = ColumnDataSource(data=data)
+    print(data)
+    data_table = DataTable(source=source, columns=columns, width=2000, height=1000)
+    for i in range(0, numberofstates):
+        if definedstates[i] == False:
+            found = False
+    if found == False:
+        print("Enough information was not provided to solve the system")
+        plot1,plot2,plot3 =plotaroundundefined(plotinfo,plotnumber,processes)
+    else:
+        print("System was solved with the following properties:")
+        print(properties)
+        plot1,plot2,plot3= plotaround(plotinfo,plotnumber,processes)
 
 
+    show(layout([
+    [plot1,plot2,plot3],
+    [data_table],
+]))
 
 def plotPvundefined(plotinfo, plotnumber, processes):
-    plot1 = figure(title="P v Diagram " + str(plotnumber + 1), x_axis_label='v', y_axis_label='P')
+    plot1 = figure(title="P v Diagram " + str(plotnumber + 1), x_axis_label='v(m^3/kg)', y_axis_label='P(Pa)')
     for i in range(0, numberofstates):
         plot1.scatter(plotinfo[i][:, 2], plotinfo[i][:, 1],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
     plot1.add_layout(plot1.legend[0], 'right')
-    show(plot1)
+    return plot1
 
 def plotTsundefined(plotinfo, plotnumber, processes):
-    plot2 = figure(title="T s Diagram " + str(plotnumber + 1), x_axis_label='s', y_axis_label='T')
+    plot2 = figure(title="T s Diagram " + str(plotnumber + 1), x_axis_label='s(J/(Kg*K)', y_axis_label='T(K)')
     for i in range(0, numberofstates):
         plot2.scatter(plotinfo[i][:, 5], plotinfo[i][:, 0],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot2.add_layout(plot2.legend[0], 'right')
-    show(plot2)
+    return plot2
 
 def plothsundefined(plotinfo, plotnumber, processes):
-    plot3 = figure(title="h s Diagram " + str(plotnumber + 1), x_axis_label='s', y_axis_label='h')
+    plot3 = figure(title="h s Diagram " + str(plotnumber + 1), x_axis_label='s(J/(Kg*K)', y_axis_label='s(J/(Kg)')
     for i in range(0, numberofstates):
         plot3.scatter(plotinfo[i][:, 5], plotinfo[i][:, 4],legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
     plot3.add_layout(plot3.legend[0], 'right')
-    show(plot3)
+    return plot3
 
 
 
