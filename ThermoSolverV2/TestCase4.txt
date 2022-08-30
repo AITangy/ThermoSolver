@@ -1,7 +1,7 @@
 from initialise import *
 import constants
 
-
+solveforspecific = False
 M,R,Cp,Cv,gamma = constants.Helium()
 
 for i in range(0,numberofstates):
@@ -58,7 +58,8 @@ g = 9.81
 for states in range(0, numberofstates):
     if processtype[states] == ["Isentropic"]:  # passing 2d array info
         isenefficiency[states] = 1
-
+    if solveforspecific == True:
+        mflowrate[states] = 1
     properties[states] = [T[states], P[states], v[states], u[states], h[states], s[states]]
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]

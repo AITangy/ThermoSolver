@@ -74,6 +74,7 @@ def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
 
     source = ColumnDataSource(data=data)
     print(data)
+    print(processes)
     data_table = DataTable(source=source, columns=columns, width=2000, height=1000)
     for i in range(0, numberofstates):
         if definedstates[i] == False:

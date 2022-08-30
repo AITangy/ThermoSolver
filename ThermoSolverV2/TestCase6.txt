@@ -3,9 +3,7 @@ import constants
 import statename
 
 M,R,Cp,Cv,gamma = constants.Air()
-
-for i in range(0,numberofstates):
-    mflowrate[i] = 1
+solveforspecific = True
 
 P[0] = 1*10**5
 P[1] = 10*10**5
@@ -60,7 +58,8 @@ for states in range(0, numberofstates):
 
     if processtype[states] == ["Isentropic"]:  # passing 2d array info
         isenefficiency[states] = 1
-
+    if solveforspecific == True:
+        mflowrate[states] = 1
 
 
 
