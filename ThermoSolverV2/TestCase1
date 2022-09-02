@@ -16,7 +16,8 @@ componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
 
-wtransfer[0] = 3000*10**3
+wtransfer[0] = -3000*10**3
+wtransfer[1]=0
 qtransfer[2] = 0
 
 

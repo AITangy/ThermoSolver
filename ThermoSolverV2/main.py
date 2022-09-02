@@ -4,7 +4,9 @@ from relationships import CheckRelation
 from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths,defmessage
 from propertiesaround import checkaround
-from info import properties, processes,ratios,  definedstates, plotinfo,  numberofstates,maintainrelationships
+
+from info import properties,processes,ratios,plotinfo,numberofstates,definedstates,maintainrelationships
+
 
 
 def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
@@ -40,9 +42,8 @@ def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
 
 
 
+
 mainsolver(properties,processes,ratios,plotinfo,definedstates,0)
-
-
 
 
 
