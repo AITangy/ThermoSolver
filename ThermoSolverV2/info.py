@@ -2,23 +2,28 @@ from initialise import *
 import constants
 
 solveforspecific = True
-M,R,Cp,Cv,gamma = constants.Hydrogen()
-g = 9.81
-T[0]=300
-P[0] = 1000000
-P[1] = 10000000
-
-processtype[0] = ["Isothermal"]
-processtype[1] = ["Isobaric"]
+M,R,Cp,Cv,gamma = constants.Air()
+processtype[0] = ["Isentropic"]
+processtype[1] = ["Isochoric"]
 processtype[2] = ["Isentropic"]
+processtype[3] = ["Isochoric"]
+
 
 componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
+componenttype[3] = ["Cooler"]
 
-wtransfer[0] = -3000*10**3
-wtransfer[1]=0
-qtransfer[2] = 0
+T[2]=3273
+T[0]=288
+P[0] = 1*10**5
+
+vratio[0] = 9
+
+
+
+
+
 
 
 
@@ -38,6 +43,7 @@ for states in range(0, numberofstates):
         isenefficiency[states] = 1
     if solveforspecific == True:
         mflowrate[states] = 1
+
     properties[states] = [T[states], P[states], v[states], u[states], h[states], s[states]]
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]

@@ -4,9 +4,13 @@ from relationships import CheckRelation
 from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths,defmessage
 from propertiesaround import checkaround
-
-from info import properties,processes,ratios,plotinfo,numberofstates,definedstates,maintainrelationships
-
+import numpy as np
+from info import numberofstates,maintainrelationships
+from info import properties as ogproperties
+from info import processes as ogprocesses
+from info import ratios as ogratios
+from info import plotinfo as ogplotinfo
+from info import definedstates as ogdefinedstates
 
 
 def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
@@ -37,13 +41,14 @@ def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
     defmessage(definedstates,properties,plotinfo,plotnumber,processes)
 
 
+for i in range(0,1):
 
-
-
-
-
-
-mainsolver(properties,processes,ratios,plotinfo,definedstates,0)
+    properties = np.copy(ogproperties)
+    processes = np.copy(ogprocesses)
+    ratios = np.copy(ogratios)
+    plotinfo = np.copy(ogplotinfo)
+    definedstates = np.copy(ogdefinedstates)
+    mainsolver(properties, processes, ratios, plotinfo, definedstates, 0)
 
 
 
