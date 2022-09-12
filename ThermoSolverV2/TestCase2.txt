@@ -18,11 +18,14 @@ T[2]=3273
 T[0]=288
 P[0] = 1*10**5
 
-vratio[0] = 9
+vratio[0] = 1/9
 
 
 
-
+qtransfer[0]=0
+wtransfer[1]=0
+qtransfer[2]=0
+wtransfer[3]=0
 
 
 

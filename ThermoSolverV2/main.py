@@ -5,7 +5,7 @@ from qandw import calcqandw, useqandw
 from plotter import plotaround, plotPv,plotTs,ploths,defmessage
 from propertiesaround import checkaround
 import numpy as np
-from info import numberofstates,maintainrelationships
+from info import numberofstates,maintainrelationships,numberofplots
 from info import properties as ogproperties
 from info import processes as ogprocesses
 from info import ratios as ogratios
@@ -41,7 +41,7 @@ def mainsolver(properties,processes,ratios,plotinfo,definedstates,plotnumber):
     defmessage(definedstates,properties,plotinfo,plotnumber,processes)
 
 
-for i in range(0,1):
+for i in range(0,numberofplots):
 
     properties = np.copy(ogproperties)
     processes = np.copy(ogprocesses)
@@ -49,7 +49,7 @@ for i in range(0,1):
     plotinfo = np.copy(ogplotinfo)
     definedstates = np.copy(ogdefinedstates)
     mainsolver(properties, processes, ratios, plotinfo, definedstates, 0)
-
+    ogprocesses[0][2] = ogprocesses[0][2] - 0.1
 
 
 

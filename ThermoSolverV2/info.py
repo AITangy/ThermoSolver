@@ -1,12 +1,24 @@
 from initialise import *
 import constants
 
-solveforspecific = True
-M,R,Cp,Cv,gamma = constants.Air()
-processtype[0] = ["Isentropic"]
-processtype[1] = ["Isochoric"]
-processtype[2] = ["Isentropic"]
-processtype[3] = ["Isochoric"]
+solveforspecific = False
+M,R,Cp,Cv,gamma = constants.Helium()
+
+for i in range(0,numberofstates):
+    mflowrate[i] = 50
+
+
+
+T[0] = 280
+P[0]=100
+T[2]=1200
+
+
+processtype[0] = [""]
+processtype[1] = ["Isobaric"]
+processtype[2] = [""]
+processtype[3] = ["Isobaric"]
+
 
 
 componenttype[0] = ["Compressor"]
@@ -14,15 +26,20 @@ componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
 componenttype[3] = ["Cooler"]
 
-T[2]=3273
-T[0]=288
-P[0] = 1*10**5
-
-vratio[0] = 9
 
 
 
+isenefficiency[0] = 0.85
+isenefficiency[2] = 0.9
 
+Pratio[0] = 5
+Pratio[2] = 1/5
+
+
+qtransfer[0]=0
+wtransfer[1]=0
+qtransfer[2]=0
+wtransfer[3]=0
 
 
 
@@ -43,10 +60,10 @@ for states in range(0, numberofstates):
         isenefficiency[states] = 1
     if solveforspecific == True:
         mflowrate[states] = 1
-
     properties[states] = [T[states], P[states], v[states], u[states], h[states], s[states]]
     processes[states] = [qtransfer[states], wtransfer[states], isenefficiency[states], mflowrate[states],processtype[states], componenttype[states], c[states], z[states]]
     ratios[states] = [Tratio[states], Pratio[states], vratio[states]]
+
 
 def maintainrelationships(properties,processes,ratios):
 
