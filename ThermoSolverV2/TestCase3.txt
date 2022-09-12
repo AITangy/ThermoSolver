@@ -1,6 +1,7 @@
 from initialise import *
 import constants
 
+dpnum=2
 solveforspecific = False
 M,R,Cp,Cv,gamma = constants.Air()
 

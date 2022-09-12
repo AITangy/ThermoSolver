@@ -4,8 +4,9 @@ from bokeh.plotting import figure, show
 from bokeh.layouts import row,widgetbox,layout
 from bokeh.models import ColumnDataSource
 from bokeh.models.widgets import DataTable, DateFormatter, TableColumn
-from info import numberofstates
+from info import numberofstates,dpnum
 from info import accuracy
+import numpy as np
 def plotaround(plotinfo,plotnumber,processes):
     plot1 = plotPv(plotinfo,plotnumber,processes)
     plot2 = ploths(plotinfo,plotnumber,processes)
@@ -65,12 +66,14 @@ def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
         TableColumn(field = "Enthalpies", title= "h(J/kg)"),
         TableColumn(field = "Entropies", title="s(J/(kg*K)")
     ]
-    data = {'Temperatures': properties[:,0],
-            'Pressures': properties[:,1],
-            'Volumes':properties[:,2],
-            'InternalEnergies':properties[:,3],
-            'Enthalpies':properties[:,4],
-            'Entropies':properties[:,5]}
+    #roundedproperties = np.round(properties, decimals=dpnum, out=None)
+    roundedproperties=properties
+    data = {'Temperatures': roundedproperties[:,0],
+            'Pressures': roundedproperties[:,1],
+            'Volumes':roundedproperties[:,2],
+            'InternalEnergies':roundedproperties[:,3],
+            'Enthalpies':roundedproperties[:,4],
+            'Entropies':roundedproperties[:,5]}
 
     source = ColumnDataSource(data=data)
     print(data)
