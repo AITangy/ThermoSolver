@@ -66,8 +66,8 @@ def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
         TableColumn(field = "Enthalpies", title= "h(J/kg)"),
         TableColumn(field = "Entropies", title="s(J/(kg*K)")
     ]
-    #roundedproperties = np.round(properties, decimals=dpnum, out=None)
-    roundedproperties=properties
+    roundedproperties = np.round(properties, decimals=dpnum, out=None)
+
     data = {'Temperatures': roundedproperties[:,0],
             'Pressures': roundedproperties[:,1],
             'Volumes':roundedproperties[:,2],
