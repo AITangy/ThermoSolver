@@ -2,49 +2,24 @@ from initialise import *
 import constants
 
 dpnum=2
-solveforspecific = False
-M,R,Cp,Cv,gamma = constants.Air()
+solveforspecific = True
+M,R,Cp,Cv,gamma = constants.Hydrogen()
+g = 9.81
+T[0]=300
+P[0] = 1000000
+P[1] = 10000000
 
-for i in range(0,numberofstates):
-    mflowrate[i] = 50
-
-
-
-T[0] = 15+273
-P[0] = 10000            #We made this up for plotting purposes to act as a datum, this information is not actually present.
-
-
-processtype[0] = [""]
+processtype[0] = ["Isothermal"]
 processtype[1] = ["Isobaric"]
-processtype[2] = [""]
-processtype[3] = ["Isobaric"]
-
-
+processtype[2] = ["Isentropic"]
 
 componenttype[0] = ["Compressor"]
-componenttype[1] = ["Combustor"]
+componenttype[1] = ["Heater"]
 componenttype[2] = ["Turbine"]
-componenttype[3] = ["Cooler"]
 
-
-
-
-isenefficiency[0] = 0.8
-isenefficiency[2] = 0.85
-
-Pratio[0] = 10
-Pratio[2] = 1/10
-
-qtransfer[0]=0
-qtransfer[1]=42*10**6
+wtransfer[0] = -3000*10**3
 wtransfer[1]=0
-qtransfer[2]=0
-wtransfer[3]=0
-
-
-
-
-
+qtransfer[2] = 0
 
 
 
@@ -54,7 +29,7 @@ wtransfer[3]=0
 
 
 datT = 273.16
-datP = 1*10**5
+datP = 1*10**8
 datv = R*datT/datP
 dats = 3796
 g = 9.81
