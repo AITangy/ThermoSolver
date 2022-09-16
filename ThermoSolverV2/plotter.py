@@ -1,7 +1,7 @@
 from bokeh.models import Arrow, NormalHead
 from bokeh.palettes import Category10
 from bokeh.plotting import figure, show
-from bokeh.layouts import row,widgetbox,layout
+from bokeh.layouts import row,widgetbox,layout,gridplot
 from bokeh.models import ColumnDataSource
 from bokeh.models.widgets import DataTable, DateFormatter, TableColumn
 from info import numberofstates,dpnum
@@ -23,6 +23,7 @@ def plotPv(plotinfo,plotnumber,processes):
         plot1.line(plotinfo[i][:, 2], plotinfo[i][:, 1], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot1.add_layout(plot1.legend[0], 'right')
+    plot1.legend.click_policy = "hide"
     return plot1
 
 def plotTs(plotinfo,plotnumber,processes):
@@ -31,6 +32,7 @@ def plotTs(plotinfo,plotnumber,processes):
         plot2.line(plotinfo[i][:, 5], plotinfo[i][:, 0], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot2.add_layout(plot2.legend[0], 'right')
+    plot2.legend.click_policy = "hide"
     return plot2
 def ploths(plotinfo,plotnumber,processes):
     plot3 = figure(title="h s Diagram " + str(plotnumber+1), x_axis_label='s(J/(Kg*K)', y_axis_label='h(J)')
@@ -38,6 +40,7 @@ def ploths(plotinfo,plotnumber,processes):
         plot3.line(plotinfo[i][:, 5], plotinfo[i][:, 4], legend_label="Component " + str(i) + " " + str(processes[i][5]), line_width=2,color=Category10[numberofstates][i])
 
     plot3.add_layout(plot3.legend[0], 'right')
+    plot3.legend.click_policy = "hide"
     return plot3
 
 def plotaroundundefined(plotinfo,plotnumber,processes):
@@ -90,11 +93,9 @@ def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
         print(properties)
         plot1,plot2,plot3= plotaround(plotinfo,plotnumber,processes)
 
+    grid = gridplot([[plot1, plot2, plot3], [data_table]], sizing_mode="stretch_both")
+    show(grid)
 
-    show(layout([
-    [plot1,plot2,plot3],
-    [data_table],
-]))
 
 def plotPvundefined(plotinfo, plotnumber, processes):
     plot1 = figure(title="P v Diagram " + str(plotnumber + 1), x_axis_label='v(m^3/kg)', y_axis_label='P(Pa)')
