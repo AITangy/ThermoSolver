@@ -11,7 +11,7 @@ P[1] = 10000000
 
 processtype[0] = ["Isothermal"]
 processtype[1] = ["Isobaric"]
-processtype[2] = ["Isentropic"]
+processtype[2] = [""]
 
 componenttype[0] = ["Compressor"]
 componenttype[1] = ["Heater"]
@@ -21,6 +21,7 @@ wtransfer[0] = -3000*10**3
 wtransfer[1]=0
 qtransfer[2] = 0
 
+isenefficiency[2] = 1.0
 
 
 
@@ -29,7 +30,7 @@ qtransfer[2] = 0
 
 
 datT = 273.16
-datP = 1*10**8
+datP = 1*10**5
 datv = R*datT/datP
 dats = 3796
 g = 9.81

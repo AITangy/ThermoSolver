@@ -49,7 +49,7 @@ for i in range(0,numberofplots):
     plotinfo = np.copy(ogplotinfo)
     definedstates = np.copy(ogdefinedstates)
     mainsolver(properties, processes, ratios, plotinfo, definedstates, 0)
-    ogprocesses[0][2] = ogprocesses[0][2] - 0.1
+    ogprocesses[2][2] = ogprocesses[2][2] - 0.1
 
 
 

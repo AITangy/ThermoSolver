@@ -2,7 +2,7 @@ from bokeh.models import Arrow, NormalHead
 from bokeh.palettes import Category10
 from bokeh.plotting import figure, show
 from bokeh.layouts import row,widgetbox,layout,gridplot
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource,Paragraph
 from bokeh.models.widgets import DataTable, DateFormatter, TableColumn
 from info import numberofstates,dpnum
 from info import accuracy
@@ -52,36 +52,6 @@ def plotaroundundefined(plotinfo,plotnumber,processes):
 
 def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
     found = True
-
-
-    # Temperatures = {i : properties[i,0] for i in range(0,numberofstates)}
-    # Pressures = {i: properties[i, 1] for i in range(0, numberofstates)}
-    # Volumes = {i: properties[i, 2] for i in range(0, numberofstates)}
-    # InternalEnergies ={i: properties[i, 3] for i in range(0, numberofstates)}
-    # Enthalipes = {i: properties[i, 4] for i in range(0, numberofstates)}
-    # Entropies = {i: properties[i, 5] for i in range(0, numberofstates)}
-    #
-    columns = [
-        TableColumn(field="Temperatures", title="T(K)"),
-        TableColumn(field="Pressures", title="Pressure(Pa)"),
-        TableColumn(field="Volumes",title="v(m^3/kg)"),
-        TableColumn(field = "InternalEnergies", title= "u(J/kg)"),
-        TableColumn(field = "Enthalpies", title= "h(J/kg)"),
-        TableColumn(field = "Entropies", title="s(J/(kg*K)")
-    ]
-    roundedproperties = np.round(properties, decimals=dpnum, out=None)
-
-    data = {'Temperatures': roundedproperties[:,0],
-            'Pressures': roundedproperties[:,1],
-            'Volumes':roundedproperties[:,2],
-            'InternalEnergies':roundedproperties[:,3],
-            'Enthalpies':roundedproperties[:,4],
-            'Entropies':roundedproperties[:,5]}
-
-    source = ColumnDataSource(data=data)
-    print(data)
-    print(processes)
-    data_table = DataTable(source=source, columns=columns, width=2000, height=1000)
     for i in range(0, numberofstates):
         if definedstates[i] == False:
             found = False
@@ -93,7 +63,71 @@ def defmessage(definedstates, properties,plotinfo,plotnumber,processes):
         print(properties)
         plot1,plot2,plot3= plotaround(plotinfo,plotnumber,processes)
 
-    grid = gridplot([[plot1, plot2, plot3], [data_table]], sizing_mode="stretch_both")
+
+
+
+    efficiency = "undefined"
+
+
+    Wsum = 0
+    QH = 0
+    solvedQandW = True
+    for i in range(0,numberofstates):
+        if processes[i][0]=="" or processes[i][1]=="":
+            solvedQandW = False
+    if solvedQandW ==True:
+        for i in range(0,numberofstates):
+            Wsum = Wsum + processes[i][1]
+            if processes[i][0]>0:
+                QH = QH + processes[i][0]
+        try:
+            efficiency = Wsum/QH
+            roundedefficiency = efficiency.round(dpnum)
+        except ZeroDivisionError:
+            roundedefficiency = efficiency
+    else: roundedefficiency = efficiency
+    efficiencylabel = Paragraph(text = "efficiency = " + str(roundedefficiency) )
+
+
+    # Temperatures = {i : properties[i,0] for i in range(0,numberofstates)}
+    # Pressures = {i: properties[i, 1] for i in range(0, numberofstates)}
+    # Volumes = {i: properties[i, 2] for i in range(0, numberofstates)}
+    # InternalEnergies ={i: properties[i, 3] for i in range(0, numberofstates)}
+    # Enthalipes = {i: properties[i, 4] for i in range(0, numberofstates)}
+    # Entropies = {i: properties[i, 5] for i in range(0, numberofstates)}
+    #
+    columns1 = [
+        TableColumn(field="Temperatures", title="T(K)"),
+        TableColumn(field="Pressures", title="P(Pa)"),
+        TableColumn(field="Volumes",title="v(m^3/kg)"),
+        TableColumn(field = "InternalEnergies", title= "u(J/kg)"),
+        TableColumn(field = "Enthalpies", title= "h(J/kg)"),
+        TableColumn(field = "Entropies", title="s(J/(kg*K)")
+    ]
+
+    columns2 = [
+        TableColumn(field="Heat", title="Q(J)"),
+        TableColumn(field="Work", title="W(J)"),
+            ]
+    roundedproperties = np.round(properties, decimals=dpnum, out=None)
+
+
+    data1 = {'Temperatures': roundedproperties[:,0],
+            'Pressures': roundedproperties[:,1],
+            'Volumes':roundedproperties[:,2],
+            'InternalEnergies':roundedproperties[:,3],
+            'Enthalpies':roundedproperties[:,4],
+            'Entropies':roundedproperties[:,5]}
+    data2 = {'Heat': processes[:,0],
+            'Work': processes[:,1],}
+
+    source1 = ColumnDataSource(data=data1)
+    source2 = ColumnDataSource(data=data2)
+
+    data_table1 = DataTable(source=source1, columns=columns1)
+    data_table2 = DataTable(source=source2, columns=columns2)
+
+    grid = gridplot([[plot1, plot2, plot3], [data_table1,data_table2,efficiencylabel]], sizing_mode="stretch_both")
     show(grid)
 
 
